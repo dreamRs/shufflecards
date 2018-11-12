@@ -3,7 +3,7 @@
 > Filter and sort grid layouts in Shiny application and Markdown document with [Shuffle.js](https://github.com/Vestride/Shuffle).
 
 
-[![Travis-CI Build Status](https://travis-ci.org/dreamRs/esquisse.svg?branch=master)](https://travis-ci.org/dreamRs/esquisse)
+[![Travis-CI Build Status](https://travis-ci.org/dreamRs/shufflecards.svg?branch=master)](https://travis-ci.org/dreamRs/shufflecards)
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 
 
