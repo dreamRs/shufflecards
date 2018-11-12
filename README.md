@@ -24,11 +24,18 @@ devtools::install_github("dreamRs/shufflecards")
 
 ## Example
 
-In markdown:
+In Markdown:
 
 * With an `htmlwidget` : https://dreamrs.github.io/tweets-transports/
 * With HTML tags : https://dreamrs.github.io/shufflecards
 
+In Shiny:
+
 ![](shufflecards-play.gif)
 
 (You can replace cards by plots or whatever you want :) )
+
+To run app above:
+```r
+shufflecards::play()
+```

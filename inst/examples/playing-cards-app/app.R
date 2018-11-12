@@ -75,6 +75,8 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
 
+  update_shuffle(session, "grid")
+
   # Sorting ----
   observeEvent(input$sortValue, {
     sort_cards(session, "grid", "cardVal", numeric = TRUE)

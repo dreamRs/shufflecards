@@ -56,4 +56,20 @@ playing_card <- function(suit = c("hearts", "spades", "diamonds", "clubs"),
 }
 
 
-
+#' Demo for playing cards
+#'
+#' @export
+#' @importFrom shiny shinyAppFile
+#'
+#' @examples
+#' if (interactive()) {
+#'
+#' shufflecards::play()
+#'
+#' }
+play <- function() {
+  shiny::shinyAppFile(
+    appFile = system.file("examples/playing-cards-app/app.R", package = "shufflecards"),
+    options = list("display.mode" = "showcase")
+  )
+}
