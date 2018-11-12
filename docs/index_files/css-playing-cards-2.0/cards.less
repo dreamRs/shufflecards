@@ -1,0 +1,380 @@
+/* 
+  Deck of CSS Cards
+  by Jeff Yaus
+  v2.0, released Feb 2015
+
+  http://jyaus.github.io/css-playing-cards/
+*/
+
+
+// basic colors
+@color-background: #f6f6f6;
+@color-facedown-background: #cc9;
+@color-facedown-icon: #987;
+
+@color-hearts: #c00;            
+@color-diamonds: @color-hearts; // for accessibility, some French-style decks use blue diamonds
+@color-spades: #000;            
+@color-clubs: @color-spades;    // for accessibility, some French-style decks use green clubs
+
+// how much the corners of the cards are rounded
+@card-corner-round-radius: .3em;
+
+// characters used for the icons
+// two spaces are necessary after a Unicode character, since these will be concatenated
+@icon-heart:    "\2665  ";    // cups are \2615, roses are \273F
+@icon-diamond:  "\2666  ";    // coins are \2742, bells are \237E or \1F514
+@icon-spade:    "\2660  ";    // swords are \2020
+@icon-club:     "\2663  ";    // clubs are \2759, acorns are \2766
+@icon-k:        "\265A  ";
+@icon-q:        "\265B  ";
+@icon-j:        "\2658  ";    // yeah, the jack looks a little, um, horse-faced
+@icon-joker:    "\263A  ";
+@icon-facedown: "\2748  ";   // the icon on the back of the card
+
+// text for the face cards and jokers
+@text-k:        "K";
+@text-q:        "Q";
+@text-j:        "J";
+@text-a:        "A";
+@text-joker:    "Joker";
+
+.card
+{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    width: 5em;
+    height: 7em;
+    margin: .3em;
+    background-color: @color-background;
+    font-family: Times, serif;
+    font-weight: bold;
+    border-width: .07em; // if you need to support IE<=8, lose the .box-shadow below, and double the thickness of the right and bottom borders to create a fake shadow
+    border-style: solid;
+    border-color: #666;
+    border-radius: @card-corner-round-radius;
+    box-shadow: .07em .07em .07em .07em rgba(20, 20, 20, .4);
+    
+    // upper left of card 
+    &:before,
+    &:after
+    {
+        display: block;
+        text-align: center;
+        width: .8em;
+        padding: .1em .2em 0 .1em;
+        line-height: 1em;
+    }
+
+    // center of card
+    span
+    {
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 1.2em;
+        right: .4em;
+        text-align: center;
+
+        // icons in the left and right columns
+        &:before
+        {
+            display: block;
+            font-size: 1.6em;
+            margin: .2em auto;
+        }
+
+        // icons in the center column
+        &:after
+        {
+            position: absolute;
+            top: 0;
+            left: .5em;
+            display: block;
+            width: 1em;
+            font-size: 1.6em;
+        }
+    }
+
+    // face down cards
+    &.card-facedown
+    {
+        background-color: @color-facedown-background;
+
+        &:before,
+        &:after,
+        > span:before
+        {
+            opacity: 0;
+        }
+
+        span:after
+        {
+            display: block;
+            top: .5em;
+            bottom: .5em;
+            left: .5em;
+            right: .5em;
+            width: auto;
+            background-color: darken(@color-facedown-background, 10%);
+            border-radius: @card-corner-round-radius;
+            font-size: 1em;
+            line-height: 5em;
+            text-align: center; // fix for older IE
+            color: @color-facedown-icon;
+            content: @icon-facedown;
+            border: .15em dashed saturate(@color-facedown-icon, 20%);
+        }
+
+        p
+        {
+            display: none;
+        }
+    }
+
+    // optional accessibility text, e.g. for screen readers
+    p
+    {
+        color: @color-background;
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 1px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+    }
+}
+
+/* suit colors */
+.card-hearts    {color: @color-hearts}
+.card-diamonds  {color: @color-diamonds}
+.card-clubs     {color: @color-clubs}
+.card-spades    {color: @color-spades}
+
+/* upper left - card value */
+.card-k:before  {content: @text-k}
+.card-q:before  {content: @text-q}
+.card-j:before  {content: @text-j}
+.card-10:before {content: "10"}
+.card-9:before  {content: "9"}
+.card-8:before  {content: "8"}
+.card-7:before  {content: "7"}
+.card-6:before  {content: "6"}
+.card-5:before  {content: "5"}
+.card-4:before  {content: "4"}
+.card-3:before  {content: "3"}
+.card-2:before  {content: "2"}
+.card-a:before  {content: @text-a}
+
+/* upper left - suit icon */
+.card-hearts:after   {content: "@{icon-heart}"}
+.card-diamonds:after {content: "@{icon-diamond}"}
+.card-clubs:after    {content: "@{icon-club}"}
+.card-spades:after   {content: "@{icon-spade}"}
+
+/* center - font sizes and layout */
+.card-k,
+.card-q,
+.card-j
+{
+    span:before
+    {
+        font-size: 3em;
+        line-height: 2em;
+    }
+}
+.card-a
+{
+    span:before
+    {
+        font-size: 4em;
+        line-height: 1.5em;
+    }
+}
+.card-joker, 
+.card-joker-alt
+{
+    span:before
+    {
+        font-size: 4.6em;
+    }
+}
+.card-10,
+.card-9,
+.card-8
+{
+    span:before
+    {
+        margin-top: .1em;
+        line-height: 1em;
+    }
+}
+
+.card-5,
+.card-4,
+.card-2
+{
+    span:before
+    {
+        margin-top: -.5em;
+        line-height: 2.6em;
+    }
+}
+
+.card-3,
+.card-2
+{
+    span:before
+    {
+        width: 60%;
+    }
+}
+
+.card-a
+{
+    span:before
+    {
+        margin-top: 0;
+    }
+}
+.card-joker,
+.card-joker-alt,
+.card-facedown
+{
+    span
+    {
+        left: 0;
+        right: 0;
+    }
+}
+// center columns of icons
+.card-10
+{
+    span:after
+    {
+        line-height: 2.05em;
+    }
+}
+.card-9,
+.card-5
+{
+    span:after
+    {
+        line-height: 4em;
+    }
+}
+.card-7
+{
+    span:after
+    {
+        line-height: 2.7em;
+    }
+}
+
+// diamond icons are narrower than the other suits' icons, making the icon columns too close together without this
+.card-diamonds  {word-spacing: .4em} 
+
+/* center - suit icons */
+.card-k span:before {content: "@{icon-k}"}
+.card-q span:before {content: "@{icon-q}"}
+.card-j span:before {content: "@{icon-j}"}
+
+.card-10.card-hearts span:after  {content: "@{icon-heart}@{icon-heart}";}
+.card-9.card-hearts span:after   {content: "@{icon-heart}";}
+.card-10.card-hearts span:before, 
+.card-9.card-hearts span:before, 
+.card-8.card-hearts span:before  {content: "@{icon-heart}@{icon-heart}@{icon-heart}@{icon-heart}@{icon-heart}@{icon-heart}@{icon-heart}@{icon-heart}";}
+.card-7.card-hearts span:after   {content: "@{icon-heart}";}
+.card-7.card-hearts span:before, 
+.card-6.card-hearts span:before  {content: "@{icon-heart}@{icon-heart}@{icon-heart}@{icon-heart}@{icon-heart}@{icon-heart}";}
+.card-5.card-hearts span:after   {content: "@{icon-heart}";}
+.card-5.card-hearts span:before,
+.card-4.card-hearts span:before  {content: "@{icon-heart}@{icon-heart}@{icon-heart}@{icon-heart}";} 
+.card-3.card-hearts span:before  {content: "@{icon-heart}@{icon-heart}@{icon-heart}";}
+.card-2.card-hearts span:before  {content: "@{icon-heart}@{icon-heart}";}
+.card-a.card-hearts span:before  {content: "@{icon-heart}"}
+
+.card-10.card-diamonds span:after  {content: "@{icon-diamond}@{icon-diamond}";}
+.card-9.card-diamonds span:after   {content: "@{icon-diamond}";}
+.card-10.card-diamonds span:before, 
+.card-9.card-diamonds span:before, 
+.card-8.card-diamonds span:before  {content: "@{icon-diamond}@{icon-diamond}@{icon-diamond}@{icon-diamond}@{icon-diamond}@{icon-diamond}@{icon-diamond}@{icon-diamond}";}
+.card-7.card-diamonds span:after   {content: "@{icon-diamond}";}
+.card-7.card-diamonds span:before, 
+.card-6.card-diamonds span:before  {content: "@{icon-diamond}@{icon-diamond}@{icon-diamond}@{icon-diamond}@{icon-diamond}@{icon-diamond}";}
+.card-5.card-diamonds span:after   {content: "@{icon-diamond}";}
+.card-5.card-diamonds span:before,
+.card-4.card-diamonds span:before  {content: "@{icon-diamond}@{icon-diamond}@{icon-diamond}@{icon-diamond}";}
+.card-3.card-diamonds span:before  {content: "@{icon-diamond}@{icon-diamond}@{icon-diamond}";}
+.card-2.card-diamonds span:before  {content: "@{icon-diamond}@{icon-diamond}";}
+.card-a.card-diamonds span:before  {content: "@{icon-diamond}"}
+
+.card-10.card-clubs span:after  {content: "@{icon-club}@{icon-club}";}
+.card-9.card-clubs span:after   {content: "@{icon-club}";}
+.card-10.card-clubs span:before, 
+.card-9.card-clubs span:before, 
+.card-8.card-clubs span:before  {content: "@{icon-club}@{icon-club}@{icon-club}@{icon-club}@{icon-club}@{icon-club}@{icon-club}@{icon-club}";}
+.card-7.card-clubs span:after   {content: "@{icon-club}";}
+.card-7.card-clubs span:before, 
+.card-6.card-clubs span:before  {content: "@{icon-club}@{icon-club}@{icon-club}@{icon-club}@{icon-club}@{icon-club}";}
+.card-5.card-clubs span:after   {content: "@{icon-club}";}
+.card-5.card-clubs span:before,
+.card-4.card-clubs span:before  {content: "@{icon-club}@{icon-club}@{icon-club}@{icon-club}";}
+.card-3.card-clubs span:before  {content: "@{icon-club}@{icon-club}@{icon-club}";}
+.card-2.card-clubs span:before  {content: "@{icon-club}@{icon-club}";}
+.card-a.card-clubs span:before  {content: "@{icon-club}"}
+
+.card-10.card-spades span:after  {content: "@{icon-spade}@{icon-spade}";}
+.card-9.card-spades span:after   {content: "@{icon-spade}";}
+.card-10.card-spades span:before, 
+.card-9.card-spades span:before, 
+.card-8.card-spades span:before  {content: "@{icon-spade}@{icon-spade}@{icon-spade}@{icon-spade}@{icon-spade}@{icon-spade}@{icon-spade}@{icon-spade}";}
+.card-7.card-spades span:after   {content: "@{icon-spade}";}
+.card-7.card-spades span:before, 
+.card-6.card-spades span:before  {content: "@{icon-spade}@{icon-spade}@{icon-spade}@{icon-spade}@{icon-spade}@{icon-spade}";}
+.card-5.card-spades span:after   {content: "@{icon-spade}";}
+.card-5.card-spades span:before,
+.card-4.card-spades span:before  {content: "@{icon-spade}@{icon-spade}@{icon-spade}@{icon-spade}";}
+.card-3.card-spades span:before  {content: "@{icon-spade}@{icon-spade}@{icon-spade}";}
+.card-2.card-spades span:before  {content: "@{icon-spade}@{icon-spade}";}
+.card-a.card-spades span:before  {content: "@{icon-spade}";}
+
+/* jokers */
+.card-joker,
+.card-joker-alt
+{
+    &:before
+    {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        text-align: center;
+        font-variant: small-caps;
+        color: @color-spades;
+        content: @text-joker;
+    }
+
+    &:after
+    {
+        opacity: 0;
+    }
+
+    > span:before
+    {
+        display: block;
+        margin: -.1em .4m 0 0;
+        color: @color-spades;
+        content: @icon-joker;
+    }
+}
+.card-joker-alt:before, 
+.card-joker-alt span:before 
+{
+    color: @color-hearts;
+}

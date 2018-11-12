@@ -1,0 +1,385 @@
+/* 
+  Deck of CSS Cards
+  by Jeff Yaus
+  v2.0, released Feb 2015
+
+  http://jyaus.github.io/css-playing-cards/
+*/
+
+.card {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 5em;
+  height: 7em;
+  margin: .3em;
+  background-color: #f6f6f6;
+  font-family: Times, serif;
+  font-weight: bold;
+  border-width: .07em;
+  border-style: solid;
+  border-color: #666;
+  border-radius: 0.3em;
+  box-shadow: 0.07em 0.07em 0.07em 0.07em rgba(20, 20, 20, 0.4);
+}
+.card:before,
+.card:after {
+  display: block;
+  text-align: center;
+  width: .8em;
+  padding: .1em .2em 0 .1em;
+  line-height: 1em;
+}
+.card span {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.2em;
+  right: .4em;
+  text-align: center;
+}
+.card span:before {
+  display: block;
+  font-size: 1.6em;
+  margin: .2em auto;
+}
+.card span:after {
+  position: absolute;
+  top: 0;
+  left: .5em;
+  display: block;
+  width: 1em;
+  font-size: 1.6em;
+}
+.card.card-facedown {
+  background-color: #cccc99;
+}
+.card.card-facedown:before,
+.card.card-facedown:after,
+.card.card-facedown > span:before {
+  opacity: 0;
+}
+.card.card-facedown span:after {
+  display: block;
+  top: .5em;
+  bottom: .5em;
+  left: .5em;
+  right: .5em;
+  width: auto;
+  background-color: #bbbb77;
+  border-radius: 0.3em;
+  font-size: 1em;
+  line-height: 5em;
+  text-align: center;
+  color: #998877;
+  content: "\2748  ";
+  border: 0.15em dashed #b1885f;
+}
+.card.card-facedown p {
+  display: none;
+}
+.card p {
+  color: #f6f6f6;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+/* suit colors */
+.card-hearts {
+  color: #cc0000;
+}
+.card-diamonds {
+  color: #cc0000;
+}
+.card-clubs {
+  color: #000000;
+}
+.card-spades {
+  color: #000000;
+}
+/* upper left - card value */
+.card-k:before {
+  content: "K";
+}
+.card-q:before {
+  content: "Q";
+}
+.card-j:before {
+  content: "J";
+}
+.card-10:before {
+  content: "10";
+}
+.card-9:before {
+  content: "9";
+}
+.card-8:before {
+  content: "8";
+}
+.card-7:before {
+  content: "7";
+}
+.card-6:before {
+  content: "6";
+}
+.card-5:before {
+  content: "5";
+}
+.card-4:before {
+  content: "4";
+}
+.card-3:before {
+  content: "3";
+}
+.card-2:before {
+  content: "2";
+}
+.card-a:before {
+  content: "A";
+}
+/* upper left - suit icon */
+.card-hearts:after {
+  content: "\2665  ";
+}
+.card-diamonds:after {
+  content: "\2666  ";
+}
+.card-clubs:after {
+  content: "\2663  ";
+}
+.card-spades:after {
+  content: "\2660  ";
+}
+/* center - font sizes and layout */
+.card-k span:before,
+.card-q span:before,
+.card-j span:before {
+  font-size: 3em;
+  line-height: 2em;
+}
+.card-a span:before {
+  font-size: 4em;
+  line-height: 1.5em;
+}
+.card-joker span:before,
+.card-joker-alt span:before {
+  font-size: 4.6em;
+}
+.card-10 span:before,
+.card-9 span:before,
+.card-8 span:before {
+  margin-top: .1em;
+  line-height: 1em;
+}
+.card-5 span:before,
+.card-4 span:before,
+.card-2 span:before {
+  margin-top: -0.5em;
+  line-height: 2.6em;
+}
+.card-3 span:before,
+.card-2 span:before {
+  width: 60%;
+}
+.card-a span:before {
+  margin-top: 0;
+}
+.card-joker span,
+.card-joker-alt span,
+.card-facedown span {
+  left: 0;
+  right: 0;
+}
+.card-10 span:after {
+  line-height: 2.05em;
+}
+.card-9 span:after,
+.card-5 span:after {
+  line-height: 4em;
+}
+.card-7 span:after {
+  line-height: 2.7em;
+}
+.card-diamonds {
+  word-spacing: 0.4em;
+}
+/* center - suit icons */
+.card-k span:before {
+  content: "\265A  ";
+}
+.card-q span:before {
+  content: "\265B  ";
+}
+.card-j span:before {
+  content: "\2658  ";
+}
+.card-10.card-hearts span:after {
+  content: "\2665  \2665  ";
+}
+.card-9.card-hearts span:after {
+  content: "\2665  ";
+}
+.card-10.card-hearts span:before,
+.card-9.card-hearts span:before,
+.card-8.card-hearts span:before {
+  content: "\2665  \2665  \2665  \2665  \2665  \2665  \2665  \2665  ";
+}
+.card-7.card-hearts span:after {
+  content: "\2665  ";
+}
+.card-7.card-hearts span:before,
+.card-6.card-hearts span:before {
+  content: "\2665  \2665  \2665  \2665  \2665  \2665  ";
+}
+.card-5.card-hearts span:after {
+  content: "\2665  ";
+}
+.card-5.card-hearts span:before,
+.card-4.card-hearts span:before {
+  content: "\2665  \2665  \2665  \2665  ";
+}
+.card-3.card-hearts span:before {
+  content: "\2665  \2665  \2665  ";
+}
+.card-2.card-hearts span:before {
+  content: "\2665  \2665  ";
+}
+.card-a.card-hearts span:before {
+  content: "\2665  ";
+}
+.card-10.card-diamonds span:after {
+  content: "\2666  \2666  ";
+}
+.card-9.card-diamonds span:after {
+  content: "\2666  ";
+}
+.card-10.card-diamonds span:before,
+.card-9.card-diamonds span:before,
+.card-8.card-diamonds span:before {
+  content: "\2666  \2666  \2666  \2666  \2666  \2666  \2666  \2666  ";
+}
+.card-7.card-diamonds span:after {
+  content: "\2666  ";
+}
+.card-7.card-diamonds span:before,
+.card-6.card-diamonds span:before {
+  content: "\2666  \2666  \2666  \2666  \2666  \2666  ";
+}
+.card-5.card-diamonds span:after {
+  content: "\2666  ";
+}
+.card-5.card-diamonds span:before,
+.card-4.card-diamonds span:before {
+  content: "\2666  \2666  \2666  \2666  ";
+}
+.card-3.card-diamonds span:before {
+  content: "\2666  \2666  \2666  ";
+}
+.card-2.card-diamonds span:before {
+  content: "\2666  \2666  ";
+}
+.card-a.card-diamonds span:before {
+  content: "\2666  ";
+}
+.card-10.card-clubs span:after {
+  content: "\2663  \2663  ";
+}
+.card-9.card-clubs span:after {
+  content: "\2663  ";
+}
+.card-10.card-clubs span:before,
+.card-9.card-clubs span:before,
+.card-8.card-clubs span:before {
+  content: "\2663  \2663  \2663  \2663  \2663  \2663  \2663  \2663  ";
+}
+.card-7.card-clubs span:after {
+  content: "\2663  ";
+}
+.card-7.card-clubs span:before,
+.card-6.card-clubs span:before {
+  content: "\2663  \2663  \2663  \2663  \2663  \2663  ";
+}
+.card-5.card-clubs span:after {
+  content: "\2663  ";
+}
+.card-5.card-clubs span:before,
+.card-4.card-clubs span:before {
+  content: "\2663  \2663  \2663  \2663  ";
+}
+.card-3.card-clubs span:before {
+  content: "\2663  \2663  \2663  ";
+}
+.card-2.card-clubs span:before {
+  content: "\2663  \2663  ";
+}
+.card-a.card-clubs span:before {
+  content: "\2663  ";
+}
+.card-10.card-spades span:after {
+  content: "\2660  \2660  ";
+}
+.card-9.card-spades span:after {
+  content: "\2660  ";
+}
+.card-10.card-spades span:before,
+.card-9.card-spades span:before,
+.card-8.card-spades span:before {
+  content: "\2660  \2660  \2660  \2660  \2660  \2660  \2660  \2660  ";
+}
+.card-7.card-spades span:after {
+  content: "\2660  ";
+}
+.card-7.card-spades span:before,
+.card-6.card-spades span:before {
+  content: "\2660  \2660  \2660  \2660  \2660  \2660  ";
+}
+.card-5.card-spades span:after {
+  content: "\2660  ";
+}
+.card-5.card-spades span:before,
+.card-4.card-spades span:before {
+  content: "\2660  \2660  \2660  \2660  ";
+}
+.card-3.card-spades span:before {
+  content: "\2660  \2660  \2660  ";
+}
+.card-2.card-spades span:before {
+  content: "\2660  \2660  ";
+}
+.card-a.card-spades span:before {
+  content: "\2660  ";
+}
+/* jokers */
+.card-joker:before,
+.card-joker-alt:before {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+  font-variant: small-caps;
+  color: #000000;
+  content: "Joker";
+}
+.card-joker:after,
+.card-joker-alt:after {
+  opacity: 0;
+}
+.card-joker > span:before,
+.card-joker-alt > span:before {
+  display: block;
+  margin: -0.1em 0.4m 0 0;
+  color: #000000;
+  content: "\263A  ";
+}
+.card-joker-alt:before,
+.card-joker-alt span:before {
+  color: #cc0000;
+}

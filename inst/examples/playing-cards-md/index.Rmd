@@ -1,0 +1,57 @@
+---
+title: "Playing cards !"
+subtitle: "With package `shufflecards`"
+output:
+  html_document:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(shufflecards)
+library(shiny)
+```
+
+<i class="fab fa-github" aria-hidden="true"></i> GitHub repo : https://github.com/dreamRs/shufflecards
+
+<!-- data -->
+```{r}
+deck <- expand.grid(
+  suits = c("hearts", "spades", "diamonds", "clubs"),
+  values = c("a", 2:10, "j", "q", "k")
+)
+deck$order <- as.numeric(deck$values)
+```
+
+
+<!-- sorting buttons -->
+```{r}
+rmd_group_buttons(
+  shuffleId = "grid", label = "Click to sort cards !",
+  sort_button("Sort by value", "cardVal", numeric = TRUE, icon = icon("sort-numeric-asc")),
+  sort_button("Sort by value (decreasing)", "cardVal", numeric = TRUE, decreasing = TRUE, icon = icon("sort-numeric-desc")),
+  sort_button("Sort by suits", "cardSuits", icon = icon("sort-alpha-asc")),
+  sort_button("Random!", "random", icon = icon("random"))
+)
+```
+
+
+<!-- shuffle grid layout -->
+```{r}
+shuffle_container(
+  shuffleId = "grid",
+  no_card = "No card to display!",
+  card_list = lapply(
+    X = seq_len(nrow(deck)),
+    FUN = function(i) {
+      shuffle_card(
+        groups = deck[i, "suits"], # for filtering
+        cardVal = deck[i, "order"], # for sorting
+        cardSuits = deck[i, "suits"], # for sorting
+        playing_card(deck[i, "suits"], deck[i, "values"])
+      )
+    }
+  )
+)
+```
+
