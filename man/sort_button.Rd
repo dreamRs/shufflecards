@@ -4,17 +4,17 @@
 \alias{sort_button}
 \title{Buttons for markdown document}
 \usage{
-sort_button(label, sort_by, numeric = FALSE, decreasing = FALSE,
+sort_button(label, by, numeric = FALSE, desc = FALSE,
   status = "default", icon = NULL, width = NULL, ...)
 }
 \arguments{
 \item{label}{The contents of the button.}
 
-\item{sort_by}{Key(s) defined in \code{shuffle_card} to sort elements.}
+\item{by}{Key(s) defined in \code{shuffle_card} to sort elements.}
 
 \item{numeric}{Logical, set to \code{TRUE} if key is a numeric value.}
 
-\item{decreasing}{Logical, set to \code{TRUE} to sort in decreasing order.}
+\item{desc}{Logical, set to \code{TRUE} to sort in decreasing order.}
 
 \item{status}{Add a class to the buttons, you can use Bootstrap status like 'info',
 'primary', 'danger', 'warning' or 'success'. Or use an arbitrary strings to add a

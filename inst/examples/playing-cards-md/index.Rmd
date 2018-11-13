@@ -29,7 +29,7 @@ deck$order <- as.numeric(deck$values)
 rmd_group_buttons(
   shuffleId = "grid", label = "Click to sort cards !",
   sort_button("Sort by value", "cardVal", numeric = TRUE, icon = icon("sort-numeric-asc")),
-  sort_button("Sort by value (decreasing)", "cardVal", numeric = TRUE, decreasing = TRUE, icon = icon("sort-numeric-desc")),
+  sort_button("Sort by value (decreasing)", "cardVal", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-desc")),
   sort_button("Sort by suits", "cardSuits", icon = icon("sort-alpha-asc")),
   sort_button("Random!", "random", icon = icon("random"))
 )

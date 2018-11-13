@@ -23,9 +23,9 @@ rmd_group_buttons <- function(shuffleId, ..., label = NULL) {
 #' Buttons for markdown document
 #'
 #' @param label The contents of the button.
-#' @param sort_by Key(s) defined in \code{shuffle_card} to sort elements.
+#' @param by Key(s) defined in \code{shuffle_card} to sort elements.
 #' @param numeric Logical, set to \code{TRUE} if key is a numeric value.
-#' @param decreasing Logical, set to \code{TRUE} to sort in decreasing order.
+#' @param desc Logical, set to \code{TRUE} to sort in decreasing order.
 #' @param status Add a class to the buttons, you can use Bootstrap status like 'info',
 #'  'primary', 'danger', 'warning' or 'success'. Or use an arbitrary strings to add a
 #'  custom class, e.g. : with \code{status = 'myClass'}, buttons will have class \code{btn-myClass}.
@@ -40,7 +40,7 @@ rmd_group_buttons <- function(shuffleId, ..., label = NULL) {
 #'
 #' @examples
 #' # TODO
-sort_button <- function(label, sort_by, numeric = FALSE, decreasing = FALSE, status = "default", icon = NULL, width = NULL, ...) {
+sort_button <- function(label, by, numeric = FALSE, desc = FALSE, status = "default", icon = NULL, width = NULL, ...) {
   if (!is.null(icon)) {
     if ("shiny.tag" %in% class(icon)) {
       icon <- removeDependencies(icon)
@@ -51,9 +51,9 @@ sort_button <- function(label, sort_by, numeric = FALSE, decreasing = FALSE, sta
       paste0("width: ", validateCssUnit(width), ";"),
     type = "button",
     class = paste0("btn btn-", status),
-    `data-sort-by` = sort_by,
+    `data-sort-by` = by,
     `data-sort-numeric` = tolower(numeric),
-    `data-sort-decreasing` = tolower(decreasing),
+    `data-sort-decreasing` = tolower(desc),
     list(icon, label), ...,
     if (!is.null(icon)) html_dependency_font_awesome()
   )

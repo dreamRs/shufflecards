@@ -22,5 +22,91 @@ where first columns contains names and second \code{TRUE} or \code{FALSE}.}
 Filter a Shuffle grid layout with custom values
 }
 \examples{
-# TODO
+if (interactive()) {
+  library(ggplot2)
+  library(dplyr)
+  library(shiny)
+  library(shufflecards)
+
+  # utility fun
+  is.even <- function(x) x \%\% 2 == 0
+
+  ui <- fluidPage(
+    tags$h2("Filter a Shuffle Grid"),
+    fluidRow(
+      column(
+        width = 3,
+        radioButtons(
+          inputId = "type_num",
+          label = "Odd or Even",
+          choices = c("All", "Odd", "Even")
+        ),
+        sliderInput(
+          inputId = "val_num",
+          label = "Value:",
+          min = 1, max = 12,
+          value = c(1, 12)
+        )
+      ),
+      column(
+        width = 9,
+        shuffle_container(
+          shuffleId = "gridNum",
+          card_list = lapply(
+            X = 1:12,
+            FUN = function(i) {
+              shuffle_card(
+                id = paste0("card", i), # set an ID to cards to use server-side
+                plotOutput(outputId = paste0("plot", i), width = "250px", height = "250px")
+              )
+            }
+          )
+        )
+      )
+    )
+  )
+
+  server <- function(input, output, session) {
+
+    # Make individual plots ----
+    lapply(
+      X = 1:12,
+      FUN =  function(i) {
+        output[[paste0("plot", i)]] <- renderPlot({
+          ggplot() + geom_text(aes(1, 1, label = i), size = 50)
+        })
+      }
+    )
+
+    # Filters ----
+    observe({
+      if (input$type_num == "All") {
+        type_num <- c("even", "odd")
+      } else {
+        type_num <- tolower(input$type_num)
+      }
+
+      # Create a df to filters values
+      data_frame(num = 1:12) \%>\%
+        mutate(
+          id = paste0("card", num), # card's ID
+          type = if_else(is.even(num), "even", "odd")
+        ) \%>\%
+        mutate(
+          ind = type \%in\% type_num &
+            num >= input$val_num[1] &
+            num <= input$val_num[2] # logical indicator
+        ) \%>\%
+        select(id, ind) \%>\% # keep only id & indicator
+        filter_cards(
+          session = session,
+          shuffleId = "gridNum",
+          filter_by = "id",
+          filter_list = .  # <- Use a two columns df
+        )
+    })
+  }
+
+  shinyApp(ui, server)
+}
 }
