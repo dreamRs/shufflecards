@@ -221,7 +221,7 @@ if (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings) {
     	if (type == 'filter-custom') {
     	  this.shuffleInstance.shuffle.filter(function(element) {
     	    var filterAttr = element.getAttribute(data.filterBy);
-    	    return data.filterList[filterAttr];
+    	    return data.filterList[filterAttr] ? true : false;
     	  });
     	}
 

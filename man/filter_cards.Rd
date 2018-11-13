@@ -4,19 +4,25 @@
 \alias{filter_cards}
 \title{Filter a Shuffle grid layout with custom values}
 \usage{
-filter_cards(session, shuffleId, filter_by, filter_list)
+filter_cards(session, shuffleId, by, filters)
 }
 \arguments{
 \item{session}{The \code{session} object passed to function given to shinyServer.}
 
 \item{shuffleId}{The id of the shuffle container.}
 
-\item{filter_by}{Key defined in \code{shuffle_card} to filter elements, can be \code{"id"}
+\item{by}{Key defined in \code{shuffle_card} to filter elements, can be \code{"id"}
 to refer to the unique ID associated with the card.}
 
-\item{filter_list}{A named list, where names match the names used in \code{filter_by}
-for \code{shuffle_card} and value are \code{TRUE} or \code{FALSE}. Alternatively a \code{data.frame}
-where first columns contains names and second \code{TRUE} or \code{FALSE}.}
+\item{filters}{Possible values are:
+
+  - \strong{named list:} where names match the key used in \code{by} and values are \code{TRUE} or \code{FALSE}
+
+  - \strong{two-columns data.frame:} where first column contains names and second \code{TRUE} or \code{FALSE}
+
+  - \strong{one-column data.frame:} where the column contains cards key to display (those absent will be hided)
+
+  - \strong{character vector:} containing cards key to display}
 }
 \description{
 Filter a Shuffle grid layout with custom values
@@ -27,6 +33,8 @@ if (interactive()) {
   library(dplyr)
   library(shiny)
   library(shufflecards)
+
+
 
   # utility fun
   is.even <- function(x) x \%\% 2 == 0
@@ -92,17 +100,17 @@ if (interactive()) {
           id = paste0("card", num), # card's ID
           type = if_else(is.even(num), "even", "odd")
         ) \%>\%
-        mutate(
-          ind = type \%in\% type_num &
-            num >= input$val_num[1] &
-            num <= input$val_num[2] # logical indicator
+        filter(
+          type \%in\% type_num,      # filter df to keep desired cards
+          num >= input$val_num[1],
+          num <= input$val_num[2]
         ) \%>\%
-        select(id, ind) \%>\% # keep only id & indicator
+        pull(id) \%>\% # extract only id
         filter_cards(
           session = session,
           shuffleId = "gridNum",
-          filter_by = "id",
-          filter_list = .  # <- Use a two columns df
+          by = "id",
+          filters = .  # <- Vector of IDs to display
         )
     })
   }

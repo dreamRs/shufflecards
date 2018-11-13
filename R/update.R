@@ -185,11 +185,17 @@ filter_cards_groups <- function(session, shuffleId, groups) {
 #'
 #' @param session The \code{session} object passed to function given to shinyServer.
 #' @param shuffleId The id of the shuffle container.
-#' @param filter_by Key defined in \code{shuffle_card} to filter elements, can be \code{"id"}
+#' @param by Key defined in \code{shuffle_card} to filter elements, can be \code{"id"}
 #'  to refer to the unique ID associated with the card.
-#' @param filter_list A named list, where names match the names used in \code{filter_by}
-#'  for \code{shuffle_card} and value are \code{TRUE} or \code{FALSE}. Alternatively a \code{data.frame}
-#'  where first columns contains names and second \code{TRUE} or \code{FALSE}.
+#' @param filters Possible values are:
+#'
+#'   - \strong{named list:} where names match the key used in \code{by} and values are \code{TRUE} or \code{FALSE}
+#'
+#'   - \strong{two-columns data.frame:} where first column contains names and second \code{TRUE} or \code{FALSE}
+#'
+#'   - \strong{one-column data.frame:} where the column contains cards key to display (those absent will be hided)
+#'
+#'   - \strong{character vector:} containing cards key to display
 #'
 #' @export
 #'
@@ -201,6 +207,8 @@ filter_cards_groups <- function(session, shuffleId, groups) {
 #'   library(dplyr)
 #'   library(shiny)
 #'   library(shufflecards)
+#'
+#'
 #'
 #'   # utility fun
 #'   is.even <- function(x) x %% 2 == 0
@@ -266,54 +274,61 @@ filter_cards_groups <- function(session, shuffleId, groups) {
 #'           id = paste0("card", num), # card's ID
 #'           type = if_else(is.even(num), "even", "odd")
 #'         ) %>%
-#'         mutate(
-#'           ind = type %in% type_num &
-#'             num >= input$val_num[1] &
-#'             num <= input$val_num[2] # logical indicator
+#'         filter(
+#'           type %in% type_num,      # filter df to keep desired cards
+#'           num >= input$val_num[1],
+#'           num <= input$val_num[2]
 #'         ) %>%
-#'         select(id, ind) %>% # keep only id & indicator
+#'         pull(id) %>% # extract only id
 #'         filter_cards(
 #'           session = session,
 #'           shuffleId = "gridNum",
-#'           filter_by = "id",
-#'           filter_list = .  # <- Use a two columns df
+#'           by = "id",
+#'           filters = .  # <- Vector of IDs to display
 #'         )
 #'     })
 #'   }
 #'
 #'   shinyApp(ui, server)
 #' }
-filter_cards <- function(session, shuffleId, filter_by, filter_list) {
-  stopifnot(is.character(filter_by) & length(filter_by) == 1)
-  if (is.data.frame(filter_list)) {
-    filter_list <- setNames(as.list(filter_list[[2]]), filter_list[[1]])
+filter_cards <- function(session, shuffleId, by, filters) {
+  stopifnot(is.character(by) & length(by) == 1)
+  if (is.data.frame(filters)) {
+    if (ncol(filters) > 1) {
+      filters <- setNames(as.list(filters[[2]]), filters[[1]])
+    } else {
+      filters <- setNames(as.list(rep_len(TRUE, length(filters[[1]]))), filters[[1]])
+    }
+  } else if (is.atomic(filters)) {
+    filters <- as.character(filters)
+    filters <- setNames(as.list(rep_len(TRUE, length(filters))), filters)
   } else {
-    filter_list <- as.list(filter_list)
-    if (!all(nzchar(names(filter_list)))) {
-      stop("'filter_list' must be named !", call. = FALSE)
+    filters <- as.list(filters)
+    if (!all(nzchar(names(filters)))) {
+      stop("'filters' must be named !", call. = FALSE)
     }
   }
-  filter_list <- lapply(
-    X = setNames(filter_list, names(filter_list)),
+  filters <- lapply(
+    X = setNames(filters, names(filters)),
     FUN = function(x) {
       if (length(x) > 1) {
-        warning("'filter_list' elements must be of length one, keeping first one", call. = FALSE)
+        warning("'filters' elements must be of length one, keeping first one", call. = FALSE)
         x <- x[1]
       }
       if (is.na(x)) {
-        warning("'filter_list' doesn't support missing values, treating as FALSE", call. = FALSE)
+        warning("'filters' doesn't support missing values, treating as FALSE", call. = FALSE)
         x <- FALSE
       }
       if (!is.logical(x)) {
-        stop("'filter_list' elements must be TRUE or FALSE", call. = FALSE)
+        stop("'filters' elements must be TRUE or FALSE", call. = FALSE)
       }
       x
     }
   )
-  if (filter_by != "id") {
-    filter_by <- paste("data", filter_by, sep = "-")
+  if (by != "id") {
+    by <- paste("data", by, sep = "-")
   }
-  message <- list(type = "filter-custom", filterBy = filter_by, filterList = filter_list)
+  message <- list(type = "filter-custom", filterBy = by, filterList = filters)
   session$sendInputMessage(shuffleId, message)
 }
 
