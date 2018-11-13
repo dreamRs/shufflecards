@@ -45,10 +45,10 @@ shuffle_container <- function(shuffleId, ..., card_list = NULL, no_card = NULL, 
 #'
 #' @param ... UI elements to include within the card.
 #' @param groups Character vector of groups used to filtering.
-#' @param id Cards's id.
+#' @param id Cards's id, can be useful to filter cards server-side.
 #' @param class CSS class(es) to apply on the card.
 #' @param style Inline CSS to apply on the card.
-#' @param width The width of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
+#' @param width,height The width / height of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
 #'
 #' @export
 #'
@@ -58,7 +58,7 @@ shuffle_container <- function(shuffleId, ..., card_list = NULL, no_card = NULL, 
 #' @examples
 #'
 #' # TODO
-shuffle_card <- function(..., groups = NULL, id = NULL, class = NULL, style = NULL, width = NULL) {
+shuffle_card <- function(..., groups = NULL, id = NULL, class = NULL, style = NULL, width = NULL, height = NULL) {
   args <- list(...)
   nargs <- names(args)
   has_names <- nzchar(nargs)
@@ -69,6 +69,7 @@ shuffle_card <- function(..., groups = NULL, id = NULL, class = NULL, style = NU
   tag_attributes <- dropNulls(list(
     id = id, class = class, class = "element-item", style = style,
     style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
+    style = if (!is.null(height)) paste0("height: ", validateCssUnit(height), ";"),
     `data-groups` = toJSON(as.character(groups)),
     style = "margin: 5px;"
   ))

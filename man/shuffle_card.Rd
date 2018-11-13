@@ -5,20 +5,20 @@
 \title{Shuffle card element}
 \usage{
 shuffle_card(..., groups = NULL, id = NULL, class = NULL,
-  style = NULL, width = NULL)
+  style = NULL, width = NULL, height = NULL)
 }
 \arguments{
 \item{...}{UI elements to include within the card.}
 
 \item{groups}{Character vector of groups used to filtering.}
 
-\item{id}{Cards's id.}
+\item{id}{Cards's id, can be useful to filter cards server-side.}
 
 \item{class}{CSS class(es) to apply on the card.}
 
 \item{style}{Inline CSS to apply on the card.}
 
-\item{width}{The width of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
+\item{width, height}{The width / height of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
 }
 \description{
 Shuffle card element

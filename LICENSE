@@ -1,8 +1,16 @@
-R PACKAGE
-=========
-
 YEAR: 2018
 COPYRIGHT HOLDER: dreamRs
+
+The shufflecards package as a whole is distributed under GPL-3 (GNU GENERAL PUBLIC
+LICENSE version 3).
+
+
+The shufflecards package includes other open source software components. The following
+is a list of these components (full copies of the license agreements used by
+these components are included below):
+
+- shufflejs, https://github.com/Vestride/Shuffle
+- css-playing-cards, https://github.com/jyaus/css-playing-cards
 
 
 shufflejs

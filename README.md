@@ -31,7 +31,7 @@ In Markdown:
 
 In Shiny:
 
-![](shufflecards-play.gif)
+![](imgs/shufflecards-play.gif)
 
 (You can replace cards by plots or whatever you want :) )
 
@@ -39,3 +39,9 @@ To run app above:
 ```r
 shufflecards::play()
 ```
+
+With data from `gapminder` package and `ggplot2`:
+
+![](imgs/shufflecards-gapminder.gif)
+
+

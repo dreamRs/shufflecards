@@ -21,14 +21,9 @@ library(shufflecards)
 
 # Data --------------------------------------------------------------------
 
-gapminder %>%
-  filter(country == "Italy") %>%
-  ggplot() +
-  aes(x = year, y = lifeExp) +
-  geom_line() +
-  labs(title = "Italy")
-
-
+# Sample of countries
+samp_c <- c("Portugal", "Cuba", "Tunisia", "Lesotho", "Mauritania", "Chile",
+            "Bangladesh", "Slovenia", "Syria", "Poland", "Djibouti", "Myanmar")
 
 
 
@@ -42,17 +37,17 @@ ui <- fluidPage(
   fluidRow(
     column(
       width = 6,
-      actionButton(inputId = "sortNumber", label = "Sort by number", icon = icon("sort-numeric-asc")),
-      actionButton(inputId = "sortNumberDesc", label = "Sort by number (decreasing)", icon = icon("sort-numeric-desc")),
-      actionButton(inputId = "sortLetter", label = "Sort by letter", icon = icon("sort-alpha-asc"))
+      actionButton(inputId = "sortLifeExp", label = "Sort by life expectancy", icon = icon("sort-numeric-asc")),
+      actionButton(inputId = "sortLifeExpDesc", label = "Sort by expectancy (decreasing)", icon = icon("sort-numeric-desc")),
+      actionButton(inputId = "sortCountry", label = "Sort by country", icon = icon("sort-alpha-asc"))
     ),
     column(
       width = 6,
       checkboxGroupInput(
-        inputId = "countries",
+        inputId = "continent",
         label = NULL,
-        choices = c("Italy", "France", "Germany", "Spain", "UK"),
-        selected = c("Italy", "France", "Germany", "Spain", "UK"),
+        choices = c("Asia", "Europe", "Africa", "Americas", "Oceania"),
+        selected = c("Asia", "Europe", "Africa", "Americas", "Oceania"),
         inline = TRUE
       )
     )
@@ -64,30 +59,26 @@ ui <- fluidPage(
     shuffleId = "grid",
     # style = "width: 1250px; margin: auto;",
     no_card = "No country match selection...",
-    shuffle_card(
-      groups = "Italy", id = "italy",
-      number = 2, letter = "i",
-      plotOutput(outputId = "italy"), width = "400px"
-    ),
-    shuffle_card(
-      groups = "France", id = "france",
-      number = 4, letter = "f",
-      plotOutput(outputId = "france"), width = "400px"
-    ),
-    shuffle_card(
-      groups = "Germany", id = "germany",
-      number = 1, letter = "g",
-      plotOutput(outputId = "germany"), width = "400px"
-    ),
-    shuffle_card(
-      groups = "Spain", id = "spain",
-      number = 10, letter = "s",
-      plotOutput(outputId = "spain"), width = "400px"
-    ),
-    shuffle_card(
-      groups = "UK", id = "uk",
-      number = 3, letter = "u",
-      plotOutput(outputId = "uk"), width = "400px"
+    card_list = lapply(
+      X = samp_c,
+      FUN = function(x) {
+        # Get continent for the country
+        continent <- gapminder %>%
+          filter(country == x) %>%
+          pull(continent) %>%
+          unique
+        # Last life expectancy value
+        lifeExp <- gapminder %>%
+          filter(country == "Uganda") %>%
+          pull(lifeExp) %>%
+          last
+        shuffle_card(
+          groups = continent, # Use for filter
+          country = x, # for sorting
+          lifeExp = lifeExp, # for sorting
+          plotOutput(outputId = x, width = "300px", height = "300px")
+        )
+      }
     )
   )
 )
@@ -95,71 +86,42 @@ ui <- fluidPage(
 server <- function(input, output, session) {
 
   # Sorting ----
-  observeEvent(input$sortNumber, {
-    sort_cards(session, "grid", "number", numeric = TRUE)
+  observeEvent(input$sortLifeExp, {
+    sort_cards(session, "grid", "lifeExp", numeric = TRUE)
   }, ignoreInit = TRUE)
-  observeEvent(input$sortNumberDesc, {
-    sort_cards(session, "grid", "number", numeric = TRUE, decreasing = TRUE)
+  observeEvent(input$sortLifeExpDesc, {
+    sort_cards(session, "grid", "lifeExp", numeric = TRUE, decreasing = TRUE)
   }, ignoreInit = TRUE)
-  observeEvent(input$sortLetter, {
-    sort_cards(session, "grid", "letter")
+  observeEvent(input$sortCountry, {
+    sort_cards(session, "grid", "country")
   }, ignoreInit = TRUE)
 
   # Filter ----
-  observeEvent(input$countries, {
-    filter_cards_groups(session, "grid", input$countries)
+  observeEvent(input$continent, {
+    filter_cards_groups(session, "grid", input$continent)
   }, ignoreNULL = FALSE, ignoreInit = TRUE)
 
 
   # value ----
   output$res <- renderPrint(input$grid)
 
-  # Elements ----
-  output$italy <- renderPlot({
-    gapminder %>%
-      filter(country == "Italy") %>%
-      ggplot() +
-      aes(x = year, y = lifeExp) +
-      geom_line() +
-      labs(title = "Italy")
-  })
-
-  output$france <- renderPlot({
-    gapminder %>%
-      filter(country == "France") %>%
-      ggplot() +
-      aes(x = year, y = lifeExp) +
-      geom_line() +
-      labs(title = "France")
-  })
-
-  output$germany <- renderPlot({
-    gapminder %>%
-      filter(country == "Germany") %>%
-      ggplot() +
-      aes(x = year, y = lifeExp) +
-      geom_line() +
-      labs(title = "Germany")
-  })
-
-  output$spain <- renderPlot({
-    gapminder %>%
-      filter(country == "Spain") %>%
-      ggplot() +
-      aes(x = year, y = lifeExp) +
-      geom_line() +
-      labs(title = "Spain")
-  })
-
-  output$uk <- renderPlot({
-    gapminder %>%
-      filter(country == "United Kingdom") %>%
-      ggplot() +
-      aes(x = year, y = lifeExp) +
-      geom_line() +
-      labs(title = "United Kingdom")
-  })
-
+  # Plots ----
+  lapply(
+    X = samp_c,
+    FUN = function(cntr) {
+      output[[cntr]] <- renderPlot({
+        gapminder %>%
+          filter(country %in% cntr) %>%
+          ggplot() +
+          aes(year, lifeExp, color = country) +
+          geom_point(size = 2) +
+          xlim(1948, 2011) + ylim(10, 95) +
+          theme_minimal() +
+          scale_color_manual(values = country_colors, guide = "none") +
+          labs(title = cntr, x = "Year", y = "Life expectancy (in years)")
+      })
+    }
+  )
 }
 
 shinyApp(ui, server)
