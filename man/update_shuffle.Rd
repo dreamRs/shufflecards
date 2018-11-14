@@ -14,6 +14,6 @@ update_shuffle(session, shuffleId)
 \description{
 Update Shuffle Instance
 }
-\examples{
-# TODO
+\note{
+Can be useful when grid layout haven't been initialized correctly.
 }

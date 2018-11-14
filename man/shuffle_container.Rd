@@ -22,6 +22,46 @@ shuffle_container(shuffleId, ..., card_list = NULL, no_card = NULL,
 Create a Shuffle container
 }
 \examples{
+if (interactive()) {
+  library(shiny)
+  library(shufflecards)
 
-# TODO
+  ui <- fluidPage(
+    tags$h2("Create a responsive grid of cards"),
+    shuffle_container(
+      shuffleId = "grid",
+      width = "650px",
+      shuffle_card(
+        tags$div("My first card", style = "text-align: center; line-height: 200px"),
+        style = "border: 2px solid red; border-radius: 5px;",
+        width = "300px", # better with fixed width/height
+        height = "200px"
+      ),
+      shuffle_card(
+        tags$div("Second one", style = "text-align: center; line-height: 200px"),
+        style = "border: 2px solid red; border-radius: 5px;",
+        width = "300px", # better with fixed width/height
+        height = "200px"
+      ),
+      shuffle_card(
+        tags$div("Third one", style = "text-align: center; line-height: 200px"),
+        style = "border: 2px solid red; border-radius: 5px;",
+        width = "300px", # better with fixed width/height
+        height = "200px"
+      ),
+      shuffle_card(
+        tags$div("Fourth one", style = "text-align: center; line-height: 200px"),
+        style = "border: 2px solid red; border-radius: 5px;",
+        width = "300px", # better with fixed width/height
+        height = "200px"
+      )
+    )
+  )
+
+  server <- function(input, output, session) {
+
+  }
+
+  shinyApp(ui, server)
+}
 }

@@ -339,10 +339,10 @@ filter_cards <- function(session, shuffleId, by, filters) {
 #' @param session The \code{session} object passed to function given to shinyServer.
 #' @param shuffleId The id of the shuffle container.
 #'
+#' @note Can be useful when grid layout haven't been initialized correctly.
+#'
 #' @export
 #'
-#' @examples
-#' # TODO
 update_shuffle <- function(session, shuffleId) {
   session$sendInputMessage(shuffleId, list(type = "update"))
 }

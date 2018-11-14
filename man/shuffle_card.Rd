@@ -24,6 +24,82 @@ shuffle_card(..., groups = NULL, id = NULL, class = NULL,
 Shuffle card element
 }
 \examples{
+if (interactive()) {
+  library(shiny)
+  library(shufflecards)
 
-# TODO
+  ui <- fluidPage(
+    tags$h2("Arrange & filter a responsive grid of cards"),
+    fluidRow(
+      column(
+        width = 3,
+        radioButtons(
+          inputId = "arrange",
+          label = "Arrange:",
+          choices = c("number", "letter")
+        ),
+        checkboxGroupInput(
+          inputId = "filter",
+          label = "Filter:",
+          choices = c("red", "blue"),
+          selected = c("red", "blue")
+        )
+      ),
+      column(
+        width = 9,
+        shuffle_container(
+          shuffleId = "grid",
+          no_card = "Nothing to display !",
+          width = "650px",
+          shuffle_card(
+            num = 1, letter = "C", # for arrange
+            groups = "red", # for filter
+            tags$div("1 - C", style = "text-align: center; line-height: 200px"),
+            style = "border: 3px solid red; border-radius: 5px;",
+            width = "300px", # better with fixed width/height
+            height = "200px"
+          ),
+          shuffle_card(
+            num = 2, letter = "B", # for arrange
+            groups = "blue", # for filter
+            tags$div("2 - B", style = "text-align: center; line-height: 200px"),
+            style = "border: 3px solid blue; border-radius: 5px;",
+            width = "300px", # better with fixed width/height
+            height = "200px"
+          ),
+          shuffle_card(
+            num = 3, letter = "D", # for arrange
+            groups = c("red", "blue"), # for filter
+            tags$div("3 - D", style = "text-align: center; line-height: 200px"),
+            style = "border: 3px solid; border-radius: 5px; border-color: red blue blue red;",
+            width = "300px", # better with fixed width/height
+            height = "200px"
+          ),
+          shuffle_card(
+            num = 4, letter = "A", # for arrange
+            groups = "red", # for filter
+            tags$div("4 - A", style = "text-align: center; line-height: 200px"),
+            style = "border: 3px solid red; border-radius: 5px;",
+            width = "300px", # better with fixed width/height
+            height = "200px"
+          )
+        )
+      )
+    )
+  )
+
+  server <- function(input, output, session) {
+
+    observeEvent(input$arrange, {
+      arrange_cards(session, "grid", by = input$arrange)
+    }, ignoreInit = TRUE)
+
+    observeEvent(input$filter, {
+      filter_cards_groups(session, "grid", groups = input$filter)
+    }, ignoreInit = TRUE, ignoreNULL = FALSE)
+
+  }
+
+  shinyApp(ui, server)
+}
 }
