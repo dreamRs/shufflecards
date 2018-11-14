@@ -229,6 +229,20 @@ if (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings) {
         this.shuffleInstance.shuffle.update();
       }
 
+      if (type == 'add') {
+        var elementAdd = document.getElementById(data.id);
+        this.shuffleInstance.shuffle.add([elementAdd]);
+      }
+
+      if (type == "remove") {
+        for (var i = 0; i < data.id.length; i++) {
+          var elementRemove = document.getElementById(data.id[i]);
+          if (elementRemove !== null) {
+            this.shuffleInstance.shuffle.remove([elementRemove]);
+          }
+        }
+      }
+
       //$(el).trigger('change');
     }
   });

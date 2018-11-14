@@ -21,7 +21,7 @@
 #'   is.even <- function(x) x %% 2 == 0
 #'
 #'   ui <- fluidPage(
-#'     tags$h2("Filter a Shuffle Grid By Groups"),
+#'     tags$h2("Arrange a Shuffle Grid By Groups"),
 #'     fluidRow(
 #'       column(
 #'         width = 3,
