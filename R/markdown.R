@@ -2,7 +2,7 @@
 #' Group of buttons for Markdown documents
 #'
 #' @param shuffleId The id of the shuffle container.
-#' @param ... \code{\link{sort_button}} buttons to include.
+#' @param ... \code{\link{arrange_button}} buttons to include.
 #' @param label Optionnal label to display above buttons.
 #'
 #' @export
@@ -20,7 +20,9 @@ rmd_group_buttons <- function(shuffleId, ..., label = NULL) {
 }
 
 
-#' Buttons for markdown document
+#' @title Buttons for markdown document
+#'
+#' @description Arrange a Shuffle grid in markdown
 #'
 #' @param label The contents of the button.
 #' @param by Key(s) defined in \code{shuffle_card} to sort elements.
@@ -33,14 +35,13 @@ rmd_group_buttons <- function(shuffleId, ..., label = NULL) {
 #' @param width The width of the input, e.g. \code{'400px'}, or \code{'100\%'}.
 #' @param ... Named attributes to be applied to the button.
 #'
+#' @note Use \code{\link{rmd_group_buttons}} to position several buttons.
+#'
 #' @importFrom htmltools validateCssUnit tags
 #' @importFrom rmarkdown html_dependency_font_awesome
 #' @export
 #'
-#'
-#' @examples
-#' # TODO
-sort_button <- function(label, by, numeric = FALSE, desc = FALSE, status = "default", icon = NULL, width = NULL, ...) {
+arrange_button <- function(label, by, numeric = FALSE, desc = FALSE, status = "default", icon = NULL, width = NULL, ...) {
   if (!is.null(icon)) {
     if ("shiny.tag" %in% class(icon)) {
       icon <- removeDependencies(icon)

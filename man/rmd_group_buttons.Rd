@@ -9,7 +9,7 @@ rmd_group_buttons(shuffleId, ..., label = NULL)
 \arguments{
 \item{shuffleId}{The id of the shuffle container.}
 
-\item{...}{\code{\link{sort_button}} buttons to include.}
+\item{...}{\code{\link{arrange_button}} buttons to include.}
 
 \item{label}{Optionnal label to display above buttons.}
 }
