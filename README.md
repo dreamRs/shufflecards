@@ -26,7 +26,7 @@ devtools::install_github("dreamRs/shufflecards")
 
 ### Markdown
 
-You can *create* and *arrange* grid layout.
+You can **create** and **arrange** grid layout.
 
 Examples:
 
@@ -35,7 +35,7 @@ Examples:
 
 ### Shiny
 
-You can *create*, *arrange* and *filter* grid layout.
+You can **create**, **arrange** and **filter** grid layout.
 
 Examples:
 
