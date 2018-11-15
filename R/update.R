@@ -349,3 +349,114 @@ update_shuffle <- function(session, shuffleId) {
 
 
 
+
+#' Update meta-data of a card
+#'
+#' @param session The \code{session} object passed to function given to shinyServer.
+#' @param shuffleId The id of the shuffle container.
+#' @param cardId The id of the card to update
+#' @param ... Attributes to update or set.
+#'
+#' @export
+#'
+#' @examples
+#' if (interactive()) {
+#'   library(shiny)
+#'   library(shufflecards)
+#'
+#'   ui <- fluidPage(
+#'     tags$h2("Update cards's meta-data"),
+#'
+#'     fluidRow(
+#'       column(
+#'         width = 3,
+#'         sliderInput("val1", "Value card 1", 1, 10, 1),
+#'         sliderInput("val2", "Value card 2", 1, 10, 2),
+#'         sliderInput("val3", "Value card 3", 1, 10, 3),
+#'         sliderInput("val4", "Value card 4", 1, 10, 4),
+#'         actionButton("arrange", "Arrange cards with new values")
+#'       ),
+#'       column(
+#'         width = 9,
+#'         shuffle_container(
+#'           shuffleId = "grid",
+#'           shuffle_card(
+#'             id = "card1",
+#'             myvalue = 1,
+#'             tags$div("My first card", style = "text-align: center; line-height: 200px"),
+#'             style = "border: 2px solid red; border-radius: 5px;",
+#'             width = "300px", # better with fixed width/height
+#'             height = "200px"
+#'           ),
+#'           shuffle_card(
+#'             id = "card2",
+#'             myvalue = 2,
+#'             tags$div("Second one", style = "text-align: center; line-height: 200px"),
+#'             style = "border: 2px solid red; border-radius: 5px;",
+#'             width = "300px", # better with fixed width/height
+#'             height = "200px"
+#'           ),
+#'           shuffle_card(
+#'             id = "card3",
+#'             myvalue = 3,
+#'             tags$div("Third one", style = "text-align: center; line-height: 200px"),
+#'             style = "border: 2px solid red; border-radius: 5px;",
+#'             width = "300px", # better with fixed width/height
+#'             height = "200px"
+#'           ),
+#'           shuffle_card(
+#'             id = "card4",
+#'             myvalue = 4,
+#'             tags$div("Fourth one", style = "text-align: center; line-height: 200px"),
+#'             style = "border: 2px solid red; border-radius: 5px;",
+#'             width = "300px", # better with fixed width/height
+#'             height = "200px"
+#'           )
+#'         )
+#'       )
+#'     )
+#'
+#'   )
+#'
+#'   server <- function(input, output, session) {
+#'
+#'     # Update cards ----
+#'     observeEvent(input$val1, {
+#'       update_card(session, "grid", "card1", myvalue = input$val1)
+#'     }, ignoreInit = TRUE)
+#'     observeEvent(input$val2, {
+#'       update_card(session, "grid", "card2", myvalue = input$val2)
+#'     }, ignoreInit = TRUE)
+#'     observeEvent(input$val3, {
+#'       update_card(session, "grid", "card3", myvalue = input$val3)
+#'     }, ignoreInit = TRUE)
+#'     observeEvent(input$val4, {
+#'       update_card(session, "grid", "card4", myvalue = input$val4)
+#'     }, ignoreInit = TRUE)
+#'
+#'     # Arrange ----
+#'     observeEvent(input$arrange, {
+#'       arrange_cards(session, "grid", "myvalue", numeric = TRUE)
+#'     })
+#'   }
+#'
+#'   shinyApp(ui, server)
+#' }
+update_card <- function(session, shuffleId, cardId, ...) {
+  args <- list(...)
+  nargs <- names(args)
+  if (is.null(nargs))
+    stop("All arguments in '...' must be named.", call. = FALSE)
+  has_names <- nzchar(nargs)
+  if (!all(has_names))
+    stop("All arguments in '...' must be named.", call. = FALSE)
+  names(args) <- paste0("data-", names(args))
+  message <- list(type = "update-card", id = cardId, args = args)
+  session$sendInputMessage(shuffleId, message)
+}
+
+
+
+
+
+

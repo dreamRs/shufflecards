@@ -191,6 +191,16 @@ if (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings) {
 
       this.data = data;
 
+
+      // Update card
+      if (type == 'update-card') {
+        var elementUpdate = document.getElementById(data.id);
+        argsKey = Object.keys(data.args);
+        for (var i = 0; i < argsKey.length; i++) {
+          elementUpdate.setAttribute(argsKey[i], data.args[argsKey[i]]);
+        }
+      }
+
       // SORT
     	if (type == 'sort') {
     	  //shufflecardssort.data = data;

@@ -24,12 +24,20 @@ devtools::install_github("dreamRs/shufflecards")
 
 ## Example
 
-In Markdown:
+### Markdown
+
+You can *create* and *arrange* grid layout.
+
+Examples:
 
 * With an `htmlwidget` : https://dreamrs.github.io/tweets-transports/
 * With HTML tags : https://dreamrs.github.io/shufflecards
 
-In Shiny:
+### Shiny
+
+You can *create*, *arrange* and *filter* grid layout.
+
+Examples:
 
 ![](imgs/shufflecards-play.gif)
 
