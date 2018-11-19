@@ -21,3 +21,11 @@ removeDependencies <- function(tag) {
   tag
 }
 
+snake_to_camel <- function(x) {
+  gsub(pattern = "_([a-z])", replacement = "\\U\\1", x = x, perl = TRUE)
+}
+
+get_eval <- function(x) {
+  x <- vapply(x, function(x) is.character(x) && inherits(x, 'AsIs'), logical(1))
+  names(x)[x]
+}

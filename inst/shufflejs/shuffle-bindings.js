@@ -14,14 +14,21 @@
   var shuffling = function(element) {
       this.element = element;
 
+      // config
+      var config = element.querySelectorAll('script[data-for="' + element.id + '"]');
+      var options = JSON.parse(config[0].innerHTML);
+      var evals = JSON.parse(config[0].getAttribute('data-eval'));
+      if (evals.length > 0) {
+        for (var i = 0; i < evals.length; i++) {
+          options[evals[i]] = eval('(' + options[evals[i]] + ')');
+        }
+      }
       //var element = document.getElementById(el.id);
       var sizer = document.getElementById(element.id + '-sizer-element');
 
-      this.shuffle = new Shuffle(element, {
-        isCentered: false,
-        itemSelector: '.element-item',
-        sizer: sizer
-      });
+      options.itemSelector = '.element-item';
+      options.sizer = sizer;
+      this.shuffle = new Shuffle(element, options);
 
       //this._activeFilters = [];
 

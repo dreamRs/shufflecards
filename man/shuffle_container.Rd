@@ -4,8 +4,8 @@
 \alias{shuffle_container}
 \title{Create a Shuffle container}
 \usage{
-shuffle_container(shuffleId, ..., card_list = NULL, no_card = NULL,
-  width = NULL)
+shuffle_container(shuffleId, ..., card_list = NULL,
+  options = shuffle_options(), no_card = NULL, width = NULL)
 }
 \arguments{
 \item{shuffleId}{Shuffle's id.}
@@ -13,6 +13,8 @@ shuffle_container(shuffleId, ..., card_list = NULL, no_card = NULL,
 \item{...}{List of \code{shuffle_card}s to include.}
 
 \item{card_list}{Alternative list of \code{shuffle_card}s to include.}
+
+\item{options}{Options for Shuffle, see \code{\link{shuffle_options}}.}
 
 \item{no_card}{UI definition (or text) to display when all cards are filtered out.}
 
