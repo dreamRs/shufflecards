@@ -1,6 +1,6 @@
 Package: shufflecards
 Title: Filter and Sort Grid Layouts in 'shiny'
-Version: 0.0.0.9400
+Version: 0.0.1.9000
 Authors@R: c(person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Glen", "Cheney", role = "cph", comment = "shufflejs library"),
@@ -13,10 +13,12 @@ Imports:
     htmltools,
     jsonlite,
     shiny,
-    rmarkdown
-RoxygenNote: 6.1.0
-URL: https://github.com/dreamRs/shufflecards
-BugReports: https://github.com/dreamRs/shufflecards/issues
+    rmarkdown,
+    htmlwidgets,
+    crosstalk
 Suggests: 
     ggplot2,
     dplyr
+RoxygenNote: 6.1.1
+URL: https://github.com/dreamRs/shufflecards
+BugReports: https://github.com/dreamRs/shufflecards/issues

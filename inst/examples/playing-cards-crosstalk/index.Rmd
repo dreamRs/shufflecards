@@ -1,0 +1,77 @@
+---
+title: "Shufflecards with Crosstalk"
+author: "dreamRs"
+output:
+  html_document:
+    self_contained: false
+---
+
+<!-- custom CSS to make the document full width -->
+```{css, echo=FALSE}
+.main-container {
+  max-width: 95% !important;
+}
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(shufflecards)
+library(shiny)
+library(crosstalk)
+library(billboarder)
+```
+
+
+<!-- Shared data use to filter cards with crosstalk -->
+```{r}
+deck <- expand.grid(
+  suits = c("hearts", "spades", "diamonds", "clubs"),
+  values = c("a", 2:10, "j", "q", "k")
+)
+deck$order <- as.numeric(deck$values)
+deck$color <- ifelse(deck$suits %in% c("hearts", "diamonds"), "Red", "Black")
+deck$key <- paste(deck$suits, deck$values, sep = "_")
+shared_deck <- SharedData$new(deck, key = deck$key)
+```
+
+
+<!-- sorting buttons -->
+```{r}
+rmd_group_buttons(
+  shuffleId = "grid", label = "Click to sort cards !",
+  arrange_button("Sort by value", "cardVal", numeric = TRUE, icon = icon("sort-numeric-asc")),
+  arrange_button("Sort by value (decreasing)", "cardVal", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-desc")),
+  arrange_button("Sort by suits", "cardSuits", icon = icon("sort-alpha-asc")),
+  arrange_button("Random!", "random", icon = icon("random"))
+)
+```
+
+<!-- crosstalk widgets to filter cards -->
+```{r}
+bscols(widths = c(4, 4, 4),
+  filter_checkbox("suits", "Suits:", shared_deck, ~suits, inline = TRUE),
+  filter_slider("value", "Value:", shared_deck, ~order, width = "90%"),
+  filter_select("color", "Color:", shared_deck, ~color)
+)
+```
+
+
+<!-- shuffler grid -->
+```{r}
+shuffle_widget(
+  shuffleId = "grid",
+  shared_data = shared_deck,
+  no_card = "No card to display!",
+  card_list = lapply(
+    X = seq_len(nrow(deck)),
+    FUN = function(i) {
+      shuffle_card(
+        key = deck[i, "key"], # for filtering
+        playing_card(deck[i, "suits"], deck[i, "values"])
+      )
+    }
+  )
+)
+```
+
