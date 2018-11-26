@@ -45,7 +45,6 @@ shuffle_container(
     X = seq_len(nrow(deck)),
     FUN = function(i) {
       shuffle_card(
-        groups = deck[i, "suits"], # for filtering
         cardVal = deck[i, "order"], # for sorting
         cardSuits = deck[i, "suits"], # for sorting
         playing_card(deck[i, "suits"], deck[i, "values"])

@@ -1,0 +1,123 @@
+---
+title: "shufflecards with flexdashboard & crosstalk"
+output:
+  flexdashboard::flex_dashboard:
+    self_contained: false
+---
+
+
+<!-- content will not fit in the page -->
+```{css, echo=FALSE}
+html, body {
+  height: auto !important;
+  overflow-y: scroll !important;
+}
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+## PACKAGES ----
+library(shufflecards)
+library(shiny)
+library(crosstalk)
+library(highcharter)
+library(gapminder)
+library(dplyr)
+
+## DATA ----
+# sample of countries from gapminder dataset
+countries_samp <- sample(unique(gapminder$country), 15)
+
+# min & max from gdpPercap
+range_gdpPercap <- gapminder %>% 
+  filter(country %in% countries_samp) %>%
+  pull(gdpPercap) %>% 
+  range %>% 
+  pretty %>% # only to take inferior & superior bound
+  range
+
+# Data we'll use with crosstalk to filter
+gapminder_summary <- gapminder %>% 
+  filter(country %in% countries_samp) %>%
+  group_by(country, continent) %>% 
+  summarise(max_gdpPercap = round(max(gdpPercap)))
+
+# crosstalk object, it's important to define a key !
+gapminder_shared <- SharedData$new(gapminder_summary, key = as.character(gapminder_summary$country))
+
+## FUNS ----
+# function to make plots with highcharter
+plot_data <- function(x, range) {
+  highchart(height = "250px") %>% 
+  hc_chart(type = "area") %>% 
+  hc_add_series(
+    name = "GDP",
+    color = unname(country_colors[x]),
+    data = gapminder %>% 
+      filter(country == x) %>% 
+      select(x = year, y = gdpPercap) 
+    %>% list_parse()
+  ) %>% 
+  hc_legend(enabled = FALSE) %>% 
+  hc_plotOptions(area = list(
+    marker = list(enabled = FALSE),
+    fillOpacity = 1
+  )) %>% 
+  hc_title(text = x) %>% 
+  hc_xAxis(title = list(text = "Year")) %>% 
+  hc_yAxis(title = list(text = "GDP per capita (US$)"), 
+           min = range[1], max = range[2])
+}
+```
+
+Inputs {.sidebar}
+-------------------------------------
+
+<!-- crosstalk inputs to filter grid -->
+```{r}
+filter_slider("gdp", "Filter by GDP:", gapminder_shared, ~max_gdpPercap, pre = "$")
+filter_select("continent", "Continent:", gapminder_shared, ~continent)
+```
+ 
+Column
+-------------------------------------
+    
+<!-- buttons to arrange grid -->
+```{r}
+rmd_group_buttons(
+  shuffleId = "mygrid", label = "Click to arrange charts:",
+  arrange_button("Sort by name", "key", icon = icon("sort-alpha-asc")),
+  arrange_button("Sort by continent", "continent", icon = icon("sort-alpha-asc")),
+  arrange_button("Sort by maximal GDP", "maxGDP", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-asc")),
+  arrange_button("Random!", "random", icon = icon("random"))
+)
+```
+    
+<!-- grid of plots -->
+```{r}
+shuffle_widget(
+  shuffleId = "mygrid",
+  shared_data = gapminder_shared,
+  no_card = "No chart to display!",
+  options = shuffle_options(
+    is_centered = FALSE,
+    column_width = I("function(containerWidth) {return 0.32 * containerWidth;}"),
+    gutter_width = I("function(containerWidth) {return 0.01 * containerWidth;}")
+  ),
+  card_list = lapply(
+    X = countries_samp,
+    FUN = function(x) {
+      shuffle_card(
+        width = "32%",
+        key = x, # for filtering
+        continent = gapminder_summary %>% filter(country == x) %>% pull(continent), # for sorting
+        maxGDP = gapminder_summary %>% filter(country == x) %>% pull(max_gdpPercap), # for sorting
+        plot_data(x, range_gdpPercap)
+      )
+    }
+  )
+)
+```
+
