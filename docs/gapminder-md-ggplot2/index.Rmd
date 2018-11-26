@@ -1,0 +1,93 @@
+---
+title: "Shufflecards with ggplot2 in markdown"
+author: "dreamRs"
+output:
+  html_document:
+    self_contained: false
+---
+
+<!-- custom CSS to make the document full width -->
+```{css, echo=FALSE}
+.main-container {
+  max-width: 95% !important;
+}
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+## PACKAGES ----
+library(shufflecards)
+library(shiny)
+library(crosstalk)
+library(ggplot2)
+library(gapminder)
+library(dplyr)
+
+## DATA ---- 
+# Sample of countries
+samp_c <- c("Portugal", "Cuba", "Tunisia", "Lesotho", "Mauritania", "Chile",
+            "Bangladesh", "Slovenia", "Syria", "Poland", "Djibouti", "Myanmar")
+
+gapminder_summary <- gapminder %>% 
+  filter(country %in% samp_c) %>% 
+  group_by(country, continent) %>%
+  summarise(lastLifeExp = last(lifeExp))
+
+
+## FUNS ----
+plot_data <- function(cntr) {
+  gapminder %>%
+    filter(country %in% cntr) %>%
+    ggplot() +
+  aes(year, y = lifeExp, fill = country) +
+  geom_area() +
+  coord_cartesian(xlim = c(1948, 2011), ylim = c(10, 95)) +
+  theme_minimal() +
+  scale_fill_manual(values = country_colors, guide = "none") +
+  labs(title = cntr, x = "Year", y = "Life expectancy (in years)") +
+  theme(plot.title = element_text(size = 22, face = "bold"))
+}
+```
+
+<!-- sorting buttons -->
+```{r}
+rmd_group_buttons(
+  shuffleId = "grid", label = "Click to sort cards !",
+  arrange_button("Sort by expectancy", "sortLifeExp", numeric = TRUE, icon = icon("sort-numeric-asc")),
+  arrange_button("Sort by expectancy (decreasing)", "sortLifeExp", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-desc")),
+  arrange_button("Sort by country", "key", icon = icon("sort-alpha-asc")),
+  arrange_button("Random!", "random", icon = icon("random"))
+)
+```
+
+<!-- Grid -->
+```{r}
+shuffle_widget(
+  shuffleId = "grid",
+  options = shuffle_options(is_centered = TRUE),
+  # shared_data = shared_deck,
+  no_card = "No plot in selection",
+  card_list = lapply(
+    X = samp_c,
+    FUN = function(x) {
+      # Get continent for the country
+      continent <- gapminder_summary %>%
+        filter(country == x) %>%
+        pull(continent)
+      # Last life expectancy value
+      lastLifeExp <- gapminder_summary %>%
+        filter(country == x) %>%
+        pull(lastLifeExp)
+      shuffle_card(
+        width = "400px", height = "300px",
+        key = x, # for sort & filter
+        lifeExp = lastLifeExp, # for sorting
+        as_svg(plot_data(x))
+      )
+    }
+  )
+)
+```
+
+

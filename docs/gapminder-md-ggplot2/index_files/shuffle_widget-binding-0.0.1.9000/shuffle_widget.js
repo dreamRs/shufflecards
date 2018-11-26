@@ -32,25 +32,21 @@ HTMLWidgets.widget({
         //element.appendChild(nocard);
         element.parentNode.insertBefore(nocard, element.nextSibling);
 
-
-        if (x.settings.crosstalk_key !== null) {
-          // Crosstalk filter
-          var ct_filter = new crosstalk.FilterHandle();
-          // Choose group
-          ct_filter.setGroup(x.settings.crosstalk_group);
-          ct_filter.on("change", function(e) {
-            //console.log(e.value);
-            shuffleInstance.filter(function(element) {
-        	    var filterAttr = element.getAttribute('data-key');
-        	    if (e.value === null) {
-        	      return true;
-        	    } else {
-        	      return e.value.indexOf(filterAttr) >= 0;
-        	    }
-        	  });
-          });
-        }
-
+        // Crosstalk filter
+        var ct_filter = new crosstalk.FilterHandle();
+        // Choose group
+        ct_filter.setGroup(x.settings.crosstalk_group);
+        ct_filter.on("change", function(e) {
+          //console.log(e.value);
+          shuffleInstance.filter(function(element) {
+      	    var filterAttr = element.getAttribute('data-key');
+      	    if (e.value === null) {
+      	      return true;
+      	    } else {
+      	      return e.value.indexOf(filterAttr) >= 0;
+      	    }
+      	  });
+        });
 
         // Sort buttons
         var sortbtn = document.querySelector('.sort-shuffle-btn-' + id);

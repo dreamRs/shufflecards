@@ -69,7 +69,7 @@ ui <- fluidPage(
           unique
         # Last life expectancy value
         lifeExp <- gapminder %>%
-          filter(country == "Uganda") %>%
+          filter(country == x) %>%
           pull(lifeExp) %>%
           last
         shuffle_card(

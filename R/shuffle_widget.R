@@ -1,5 +1,7 @@
 #' Htmlwidget for 'Shuffle.js'
 #'
+#' Create a grid layout in markdown. Arrange the grid with \code{\link{arrange_button}}s and filter it with crosstalk inputs.
+#'
 #' @param ... List of \code{shuffle_card}s to include.
 #' @param card_list Alternative list of \code{shuffle_card}s to include.
 #' @param shared_data A `crosstalk` \code{\link[crosstalk]{SharedData}} object
@@ -34,11 +36,13 @@ shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = 
 
   rendered_tags <- renderTags(x = cards)
   rendered_nocard <- doRenderTags(no_card)
+  deps <- rendered_tags$dependencies
 
   if (!is.null(shared_data) && is.SharedData(shared_data)) {
     key <- shared_data$key()
     group <- shared_data$groupName()
     shared_data <- shared_data$origData()
+    deps <- c(deps, crosstalkLibs())
   } else {
     key <- NULL
     group <- NULL
@@ -55,14 +59,13 @@ shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = 
     )
   )
 
+
+
   # create widget
   createWidget(
     name = 'shuffle_widget',
     x = x,
-    dependencies = c(
-      rendered_tags$dependencies,
-      crosstalkLibs()
-    ),
+    dependencies = deps,
     width = width,
     height = height,
     package = 'shufflecards',
@@ -76,6 +79,20 @@ shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = 
       browser.external = TRUE,
       browser.fill = TRUE,
       padding = 10
+    )
+  )
+}
+
+
+use_polyfill <- function() {
+  attachDependencies(
+    tags$div(),
+    htmlDependency(
+      name = "polyfill",
+      version = "2.0",
+      src = c(href = "https://cdn.polyfill.io/v2/polyfill.min.js", file = "polyfill"),
+      script = "inject-polyfill.js",
+      package = "shufflecards"
     )
   )
 }

@@ -122,5 +122,33 @@ md_shuffle_update <- function(shuffleId, selector) {
 
 
 
-
+#' Convert a `ggplot2`  object to `svg`
+#'
+#' \code{\link{shuffle_widget}} generates HTML tags, to represent `ggplot2` objects you need to convert them.
+#' This is the purpose of this function, you can also use `ggiraph` or `plotly`.
+#'
+#' @param p A `ggplot2` object.
+#' @param width Width, in numeric and pixels.
+#' @param height Height, in numeric and pixels.
+#'
+#' @export
+#'
+#' @importFrom svglite stringSVG
+#' @importFrom htmltools HTML validateCssUnit
+#'
+as_svg <- function(p, width = 400, height = 300) {
+  if (!inherits(p, what = "ggplot")) {
+    stop("'p' must be of class 'ggplot'", call. = FALSE)
+  }
+  if (!is.numeric(width) | !is.numeric(height)) {
+    stop("'width' & 'height' must be numeric (in pixels)", call. = FALSE)
+  }
+  tags$div(
+    style = if (!is.null(width))
+      paste0("width: ", validateCssUnit(width), ";"),
+    style = if (!is.null(height))
+      paste0("height: ", validateCssUnit(height), ";"),
+    HTML(stringSVG(print(p), width = width/0.75/72, height = height/0.75/72))
+  )
+}
 
