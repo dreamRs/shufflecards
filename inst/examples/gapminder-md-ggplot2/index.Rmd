@@ -42,16 +42,20 @@ gapminder_summary <- gapminder %>%
 
 ## FUNS ----
 plot_data <- function(cntr) {
-  gapminder %>%
-    filter(country %in% cntr) %>%
-    ggplot() +
-  aes(year, y = lifeExp, fill = country) +
-  geom_area() +
-  coord_cartesian(xlim = c(1948, 2011), ylim = c(10, 95)) +
-  theme_minimal() +
-  scale_fill_manual(values = country_colors, guide = "none") +
-  labs(title = cntr, x = "Year", y = "Life expectancy (in years)") +
-  theme(plot.title = element_text(size = 22, face = "bold"))
+  dat <- gapminder %>%
+    filter(country %in% cntr)
+  ggplot(dat) +
+    aes(year, y = lifeExp, fill = country) +
+    geom_area() +
+    coord_cartesian(xlim = c(1948, 2011), ylim = c(10, 95)) +
+    theme_minimal() +
+    scale_fill_manual(values = country_colors, guide = "none") +
+    labs(
+      title = cntr, 
+      subtitle = sprintf("Life expectancy in 2007: %s years", last(dat$lifeExp)),
+      x = "Year", y = "Life expectancy (in years)"
+    ) +
+    theme(plot.title = element_text(size = 22, face = "bold"), plot.subtitle = element_text(size = 16))
 }
 ```
 
@@ -59,8 +63,8 @@ plot_data <- function(cntr) {
 ```{r}
 rmd_group_buttons(
   shuffleId = "grid", label = "Click to sort cards !",
-  arrange_button("Sort by expectancy", "sortLifeExp", numeric = TRUE, icon = icon("sort-numeric-asc")),
-  arrange_button("Sort by expectancy (decreasing)", "sortLifeExp", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-desc")),
+  arrange_button("Sort by expectancy", "lifeExp", numeric = TRUE, icon = icon("sort-numeric-asc")),
+  arrange_button("Sort by expectancy (decreasing)", "lifeExp", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-desc")),
   arrange_button("Sort by country", "key", icon = icon("sort-alpha-asc")),
   arrange_button("Random!", "random", icon = icon("random"))
 )
