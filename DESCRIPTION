@@ -16,7 +16,7 @@ Imports:
     rmarkdown,
     htmlwidgets,
     crosstalk,
-    svglite (>= 1.2.0)
+    ggiraph
 Suggests: 
     ggplot2,
     dplyr,

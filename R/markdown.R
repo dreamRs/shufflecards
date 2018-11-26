@@ -122,7 +122,7 @@ md_shuffle_update <- function(shuffleId, selector) {
 
 
 
-#' Convert a `ggplot2`  object to `svg`
+#' Convert a `ggplot2`  object to `ggiraph::girafe`
 #'
 #' \code{\link{shuffle_widget}} generates HTML tags, to represent `ggplot2` objects you need to convert them.
 #' This is the purpose of this function, you can also use `ggiraph` or `plotly`.
@@ -133,10 +133,10 @@ md_shuffle_update <- function(shuffleId, selector) {
 #'
 #' @export
 #'
-#' @importFrom svglite stringSVG
+#' @importFrom ggiraph girafe
 #' @importFrom htmltools HTML validateCssUnit
 #'
-as_svg <- function(p, width = 400, height = 300) {
+as_girafe <- function(p, width = 400, height = 300) {
   if (!inherits(p, what = "ggplot")) {
     stop("'p' must be of class 'ggplot'", call. = FALSE)
   }
@@ -148,7 +148,7 @@ as_svg <- function(p, width = 400, height = 300) {
       paste0("width: ", validateCssUnit(width), ";"),
     style = if (!is.null(height))
       paste0("height: ", validateCssUnit(height), ";"),
-    HTML(stringSVG(print(p), width = width/0.75/72, height = height/0.75/72))
+    # HTML(stringSVG(print(p), width = width/0.75/72, height = height/0.75/72, standalone = FALSE))
+    ggiraph::girafe(print(p), width_svg = width/0.75/72, height_svg = height/0.75/72)
   )
 }
-

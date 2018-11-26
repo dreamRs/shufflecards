@@ -42,6 +42,7 @@ HTMLWidgets.widget({
             //console.log(e.value);
             shuffleInstance.filter(function(element) {
         	    var filterAttr = element.getAttribute('data-key');
+        	    //console.log(filterAttr);
         	    if (e.value === null) {
         	      return true;
         	    } else {
