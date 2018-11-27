@@ -148,7 +148,6 @@ as_girafe <- function(p, width = 400, height = 300) {
       paste0("width: ", validateCssUnit(width), ";"),
     style = if (!is.null(height))
       paste0("height: ", validateCssUnit(height), ";"),
-    # HTML(stringSVG(print(p), width = width/0.75/72, height = height/0.75/72, standalone = FALSE))
-    ggiraph::girafe(print(p), width_svg = width/0.75/72, height_svg = height/0.75/72)
+    girafe(print(p), width_svg = width/0.75/72, height_svg = height/0.75/72)
   )
 }

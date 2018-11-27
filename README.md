@@ -40,8 +40,6 @@ devtools::install_github("dreamRs/shufflecards")
 
 ### Markdown
 
-Only with arrange:
-
 * With `htmlwidget` [`billboarder`](https://github.com/dreamRs/billboarder) : https://dreamrs.github.io/tweets-transports/
 * With HTML tags : https://dreamrs.github.io/shufflecards/playing-cards
 * With [`flexdashboard`](https://rmarkdown.rstudio.com/flexdashboard/index.html) and [`highcharter`](http://jkunst.com/highcharter/index.html) : https://dreamrs.github.io/shufflecards/flexdashboard
