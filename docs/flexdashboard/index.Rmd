@@ -49,14 +49,14 @@ gapminder_shared <- SharedData$new(gapminder_summary, key = as.character(gapmind
 
 ## FUNS ----
 # function to make plots with highcharter
-plot_data <- function(x, range) {
+plot_data <- function(cntr, range) {
   highchart(height = "250px") %>% 
   hc_chart(type = "area") %>% 
   hc_add_series(
     name = "GDP",
-    color = unname(country_colors[x]),
+    color = unname(country_colors[cntr]),
     data = gapminder %>% 
-      filter(country == x) %>% 
+      filter(country == cntr) %>% 
       select(x = year, y = gdpPercap) 
     %>% list_parse()
   ) %>% 
@@ -65,7 +65,7 @@ plot_data <- function(x, range) {
     marker = list(enabled = FALSE),
     fillOpacity = 1
   )) %>% 
-  hc_title(text = x) %>% 
+  hc_title(text = cntr) %>% 
   hc_xAxis(title = list(text = "Year")) %>% 
   hc_yAxis(title = list(text = "GDP per capita (US$)"), 
            min = range[1], max = range[2])
@@ -83,6 +83,9 @@ filter_select("continent", "Continent:", gapminder_shared, ~continent)
  
 Column
 -------------------------------------
+
+Code for this example is available [here](https://github.com/dreamRs/shufflecards/blob/master/inst/examples/gapminder-flexdashboard/index.Rmd).
+
     
 <!-- buttons to arrange grid -->
 ```{r}

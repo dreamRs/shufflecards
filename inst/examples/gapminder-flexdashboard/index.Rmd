@@ -83,6 +83,9 @@ filter_select("continent", "Continent:", gapminder_shared, ~continent)
  
 Column
 -------------------------------------
+
+Code for this example is available [here](https://github.com/dreamRs/shufflecards/blob/master/inst/examples/gapminder-flexdashboard/index.Rmd).
+
     
 <!-- buttons to arrange grid -->
 ```{r}

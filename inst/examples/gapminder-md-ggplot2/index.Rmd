@@ -6,6 +6,8 @@ output:
     self_contained: false
 ---
 
+Code for this example is available [here](https://github.com/dreamRs/shufflecards/blob/master/inst/examples/gapminder-md-ggplot2/index.Rmd).
+
 ```{r, echo=FALSE}
 shufflecards:::use_polyfill()
 ```
@@ -81,6 +83,7 @@ bscols(widths = c(8, 4),
 shuffle_widget(
   shuffleId = "grid",
   shared_data = gapminder_shared,
+  options = shuffle_options(is_centered = TRUE),
   no_card = "No plot in selection",
   card_list = lapply(
     X = samp_c,

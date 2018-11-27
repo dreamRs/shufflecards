@@ -6,6 +6,8 @@ output:
     self_contained: false
 ---
 
+Code for this example is available [here](https://github.com/dreamRs/shufflecards/blob/master/inst/examples/playing-cards-crosstalk/index.Rmd).
+
 <!-- custom CSS to make the document full width -->
 ```{css, echo=FALSE}
 .main-container {

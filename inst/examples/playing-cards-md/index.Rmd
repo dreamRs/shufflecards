@@ -6,6 +6,9 @@ output:
     self_contained: false
 ---
 
+Code for this example is available [here](https://github.com/dreamRs/shufflecards/blob/master/inst/examples/playing-cards-md/index.Rmd).
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(shufflecards)
