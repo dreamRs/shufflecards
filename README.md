@@ -57,6 +57,11 @@ With data from `gapminder` package and `ggplot2`:
 
 ![](imgs/shufflecards-gapminder.gif)
 
+Run this example with :
+
+```r
+run_example(example = "gapminder")
+```
 
 
 ## Related package
