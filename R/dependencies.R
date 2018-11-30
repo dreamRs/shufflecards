@@ -17,3 +17,14 @@ playing_cards_dependencies <- function() {
     stylesheet = "cards.css"
   )
 }
+
+#' @importFrom htmltools htmlDependency
+polyfill_dependencies <- function() {
+  htmlDependency(
+    name = "polyfill",
+    version = "2.0",
+    src = c(href = "https://cdn.polyfill.io/v2/polyfill.min.js", file = "polyfill"),
+    script = "inject-polyfill.js",
+    package = "shufflecards"
+  )
+}

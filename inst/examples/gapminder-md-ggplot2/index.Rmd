@@ -8,8 +8,9 @@ output:
 
 Code for this example is available [here](https://github.com/dreamRs/shufflecards/blob/master/inst/examples/gapminder-md-ggplot2/index.Rmd).
 
+<!-- Make it work in IE -->
 ```{r, echo=FALSE}
-shufflecards:::use_polyfill()
+shufflecards::use_polyfill()
 ```
 
 

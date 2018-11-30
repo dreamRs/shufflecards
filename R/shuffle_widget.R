@@ -84,16 +84,30 @@ shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = 
 }
 
 
+#' Add a dependency to Polyfill.io
+#'
+#' 'Shufflejs' doesn't work properly in Internet Explorer, you can use this function to make it work.
+#' It load a Polyfill from \url{https://polyfill.io/v2/docs/}.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#' # Use in UI
+#' fluidPage(
+#'   use_polyfill()
+#' )
+#'
+#' # Use in a chunk
+#' ```{r, echo=FALSE}
+#' shufflecards:::use_polyfill()
+#' ```
+#' }
 use_polyfill <- function() {
   attachDependencies(
     tags$div(),
-    htmlDependency(
-      name = "polyfill",
-      version = "2.0",
-      src = c(href = "https://cdn.polyfill.io/v2/polyfill.min.js", file = "polyfill"),
-      script = "inject-polyfill.js",
-      package = "shufflecards"
-    )
+    polyfill_dependencies()
   )
 }
 
