@@ -3,7 +3,7 @@
 shuffle_dependencies <- function() {
   htmlDependency(
     name = "shufflejs", version = "5.2.0",
-    src = c(href = "shufflejs", file = "shufflejs"), package = "shufflecards",
+    src = list(href = "shufflejs", file = "shufflejs"), package = "shufflecards",
     script = c("shuffle.min.js", "shuffle-bindings.js"),
     stylesheet = "shuffle-custom.css"
   )
@@ -13,7 +13,7 @@ shuffle_dependencies <- function() {
 playing_cards_dependencies <- function() {
   htmlDependency(
     name = "css-playing-cards", version = "2.0",
-    src = c(href = "playing-cards", file = "css-playing-cards"), package = "shufflecards",
+    src = list(href = "playing-cards", file = "css-playing-cards"), package = "shufflecards",
     stylesheet = "cards.css"
   )
 }
@@ -23,7 +23,7 @@ polyfill_dependencies <- function() {
   htmlDependency(
     name = "polyfill",
     version = "2.0",
-    src = c(href = "https://cdn.polyfill.io/v2/polyfill.min.js", file = "polyfill"),
+    src = list(href = "https://cdn.polyfill.io/v2/polyfill.min.js", file = "polyfill"),
     script = "inject-polyfill.js",
     package = "shufflecards"
   )

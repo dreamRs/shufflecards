@@ -12,6 +12,8 @@
 #' @examples
 #' # TODO
 rmd_group_buttons <- function(shuffleId, ..., label = NULL) {
+  if (!(is.character(shuffleId) & length(shuffleId) == 1))
+    stop("'shuffleId' must be a character of length one.", call. = FALSE)
   tags$div(
     class = paste0("button-group sort-shuffle-btn-", shuffleId),
     if (!is.null(label)) tagList(tags$label(label), tags$br()),
