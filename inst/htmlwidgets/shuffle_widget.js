@@ -83,6 +83,23 @@ HTMLWidgets.widget({
           });
         }
 
+
+        // Remove buttons
+        var removebtn = document.querySelectorAll('.shufflecards-remove');
+        if (removebtn !== null) {
+          removebtn = Array.from(removebtn);
+          removebtn.forEach(function (button) {
+            button.addEventListener('click', function(e) {
+              var elremove = button.parentNode;
+              var shufid = elremove.getAttribute('data-shuffleId');
+              if (shufid === id) {
+                shuffleInstance.remove([elremove]);
+              }
+            }, true);
+          });
+        }
+
+
         // No data message
         shuffleInstance.on(Shuffle.EventType.LAYOUT, function (data) {
           if (data.shuffle.visibleItems < 1) {

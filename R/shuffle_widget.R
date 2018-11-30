@@ -29,7 +29,7 @@ shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = 
   if (is.null(nargs))
     nargs <- rep_len("", length(args))
   cards <- c(args[nzchar(nargs) == 0], card_list)
-  validate_cards(cards)
+  cards <- validate_cards(cards, shuffleId)
   args <- args[nzchar(nargs) > 0]
 
   options$itemSelector <- ".element-item"

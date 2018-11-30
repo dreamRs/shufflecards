@@ -356,6 +356,7 @@ update_shuffle <- function(session, shuffleId) {
 #' @param shuffleId The id of the shuffle container.
 #' @param cardId The id of the card to update
 #' @param ... Attributes to update or set.
+#' @param title New title for the card.
 #'
 #' @export
 #'
@@ -442,17 +443,21 @@ update_shuffle <- function(session, shuffleId) {
 #'
 #'   shinyApp(ui, server)
 #' }
-update_card <- function(session, shuffleId, cardId, ...) {
+update_card <- function(session, shuffleId, cardId, ..., title = NULL) {
   args <- list(...)
-  nargs <- names(args)
-  if (is.null(nargs))
-    stop("All arguments in '...' must be named.", call. = FALSE)
-  has_names <- nzchar(nargs)
-  if (!all(has_names))
-    stop("All arguments in '...' must be named.", call. = FALSE)
-  names(args) <- paste0("data-", names(args))
-  message <- list(type = "update-card", id = cardId, args = args)
-  session$sendInputMessage(shuffleId, message)
+  if (length(args) > 0) {
+    nargs <- names(args)
+    if (is.null(nargs))
+      stop("All arguments in '...' must be named.", call. = FALSE)
+    has_names <- nzchar(nargs)
+    if (!all(has_names))
+      stop("All arguments in '...' must be named.", call. = FALSE)
+    names(args) <- paste0("data-", names(args))
+  } else {
+    args <- NULL
+  }
+  message <- list(type = "update-card", id = cardId, args = args, title = title)
+  session$sendInputMessage(shuffleId, dropNulls(message))
 }
 
 

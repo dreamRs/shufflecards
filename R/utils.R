@@ -3,16 +3,18 @@ dropNulls <- function(x) {
   x[!vapply(x, is.null, FUN.VALUE = logical(1))]
 }
 
-validate_card <- function(card) {
+validate_card <- function(card, shuffleId = NULL) {
   if (!"shufflecard.tag" %in% class(card)) {
     stop("Card element must be created with function `shuffle_card`", call. = FALSE)
   }
+  if (!is.null(shuffleId)) {
+    card <- tagAppendAttributes(card, `data-shuffleId` = shuffleId)
+  }
+  card
 }
 
-validate_cards <- function(cards) {
-  if (length(cards) > 0) {
-    lapply(cards, validate_card)
-  }
+validate_cards <- function(cards, shuffleId = NULL) {
+  lapply(cards, validate_card, shuffleId = shuffleId)
 }
 
 #' @importFrom htmltools htmlDependencies<-

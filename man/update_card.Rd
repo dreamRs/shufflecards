@@ -4,7 +4,7 @@
 \alias{update_card}
 \title{Update meta-data of a card}
 \usage{
-update_card(session, shuffleId, cardId, ...)
+update_card(session, shuffleId, cardId, ..., title = NULL)
 }
 \arguments{
 \item{session}{The \code{session} object passed to function given to shinyServer.}
@@ -14,6 +14,8 @@ update_card(session, shuffleId, cardId, ...)
 \item{cardId}{The id of the card to update}
 
 \item{...}{Attributes to update or set.}
+
+\item{title}{New title for the card.}
 }
 \description{
 Update meta-data of a card

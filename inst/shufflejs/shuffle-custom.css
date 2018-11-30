@@ -6,6 +6,14 @@
   line-height: 100px;
 }
 
+
+.sc-border {
+  padding: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+
 /* quick grid */
 .shuffle-container {
   width: 93%;
@@ -68,5 +76,119 @@
 .aspect--32x9 {
   padding-bottom: calc(28.125% - 3px);
 }
+
+
+
+
+
+
+/* Pure CSS close icon concept */
+/* by: Rubén Reyes */
+/* source: https://codepen.io/ndeniche/pen/ljbDL */
+
+.close {
+  /*position: relative;*/
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+.close:hover::before, .close:hover::after {
+  background: #1ebcc5;
+}
+.close::before, .close::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  margin-top: -1px;
+  background: #000;
+}
+.close::before {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.close::after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.close.big {
+  -webkit-transform: scale(3);
+  -moz-transform: scale(3);
+  -ms-transform: scale(3);
+  -o-transform: scale(3);
+  transform: scale(3);
+}
+.close.hairline::before, .close.hairline::after {
+  height: 1px;
+}
+.close.thick::before, .close.thick::after {
+  height: 4px;
+  margin-top: -2px;
+}
+.close.black::before, .close.black::after {
+  height: 8px;
+  margin-top: -4px;
+}
+.close.heavy::before, .close.heavy::after {
+  height: 12px;
+  margin-top: -6px;
+}
+.close.pointy::before, .close.pointy::after {
+  width: 200%;
+  left: -50%;
+}
+.close.rounded::before, .close.rounded::after {
+  border-radius: 5px;
+}
+.close.blades::before, .close.blades::after {
+  border-radius: 5px 0;
+}
+.close.warp::before, .close.warp::after {
+  border-radius: 120% 0;
+}
+.close.fat::before, .close.fat::after {
+  border-radius: 100%;
+}
+
+small {
+  display: block;
+  padding: 5rem;
+  font: 0.8rem/1 sans-serif;
+  color: #777;
+  text-align: center;
+}
+
+small a {
+  color: #1ebcc5;
+  text-decoration: none;
+  border-bottom: 1px solid #ccc;
+}
+
+small a:hover {
+  border-bottom-color: #222;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 

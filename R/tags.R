@@ -59,6 +59,8 @@
 #'   shinyApp(ui, server)
 #' }
 shuffle_container <- function(shuffleId, ..., card_list = NULL, options = shuffle_options(), no_card = NULL, width = NULL) {
+  if (!(is.character(shuffleId) & length(shuffleId) == 1))
+    stop("'shuffleId' must be a character of length one.", call. = FALSE)
   if (!inherits(options, "shuffle.options"))
     stop("'options' must be generated with 'shuffle_options'", call. = FALSE)
   args <- list(...)
@@ -66,7 +68,7 @@ shuffle_container <- function(shuffleId, ..., card_list = NULL, options = shuffl
   if (is.null(nargs))
     nargs <- rep_len("", length(args))
   cards <- c(args[nzchar(nargs) == 0], card_list)
-  validate_cards(cards)
+  cards <- validate_cards(cards, shuffleId)
   args <- args[nzchar(nargs) > 0]
   shuffleTag <- tags$div(
     id = shuffleId, class = "shuffle-container",
@@ -184,6 +186,9 @@ shuffle_options <- function(is_centered = NULL, column_width = NULL, gutter_widt
 #' @param ... UI elements to include within the card.
 #' @param groups Character vector of groups used to filtering.
 #' @param id Cards's id, can be useful to filter cards server-side.
+#' @param title Optional title, it will be wrapped in a H3 tag and can be updated from the server.
+#' @param border Logical, add borders to the card.
+#' @param closable Logical, add a button to remove the card, can't be reversed!
 #' @param class CSS class(es) to apply on the card.
 #' @param style Inline CSS to apply on the card.
 #' @param width,height The width / height of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
@@ -272,20 +277,34 @@ shuffle_options <- function(is_centered = NULL, column_width = NULL, gutter_widt
 #'
 #'   shinyApp(ui, server)
 #' }
-shuffle_card <- function(..., groups = NULL, id = NULL, class = NULL, style = NULL, width = NULL, height = NULL) {
+shuffle_card <- function(..., groups = NULL, id = NULL, title = NULL,
+                         border = FALSE, closable = FALSE,
+                         class = NULL, style = NULL, width = NULL, height = NULL) {
   args <- list(...)
   nargs <- names(args)
   has_names <- nzchar(nargs)
   if (length(has_names) > 0) {
     names(args)[has_names] <- paste0("data-", names(args)[has_names])
   }
-  tag_el <- tag("div", args)
+  if (!is.null(title)) {
+    title <- list(tags$h4(title, class = "sc-title"))
+  }
+  if (isTRUE(closable)) {
+    closable <- list(tags$span(
+      class = "close hairline shufflecards-remove"
+    ))
+  } else {
+    closable <- NULL
+  }
+  tag_el <- tag("div", c(closable, title, args))
   tag_attributes <- dropNulls(list(
     id = id, class = class, class = "element-item", style = style,
+    class = if(isTRUE(border)) "sc-border",
     style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
     style = if (!is.null(height)) paste0("height: ", validateCssUnit(height), ";"),
     `data-groups` = toJSON(as.character(groups)),
-    style = "margin: 5px;"
+    style = "margin: 5px;",
+    style = if(!is.null(closable) & is.null(title)) "padding-top: 30px;"
   ))
   tag_el <- do.call(tagAppendAttributes, c(list(tag = tag_el), tag_attributes))
   class(tag_el) <- c(class(tag_el), "shufflecard.tag")
