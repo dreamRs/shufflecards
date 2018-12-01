@@ -94,3 +94,24 @@ test_that("'shuffle_container' append nodata tag", {
 })
 
 
+
+
+# make_data_attr ----
+
+test_that("make_data_attr works", {
+  res <- make_data_attr(list(
+    letter = "A",
+    value = 1
+  ))
+
+  expect_length(res, 3)
+  expect_named(res, c("data-letter", "data-value", "data-sc-isnum"))
+
+  expect_warning(make_data_attr(list(
+    letter = "A",
+    "value gch" = 1:2
+  )))
+})
+
+
+

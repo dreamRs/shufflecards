@@ -183,7 +183,7 @@ shuffle_options <- function(is_centered = NULL, column_width = NULL, gutter_widt
 
 #' Shuffle card element
 #'
-#' @param ... UI elements to include within the card.
+#' @param ... UI elements to include within the card. Named elements canb be used to arrange cards.
 #' @param groups Character vector of groups used to filtering.
 #' @param id Cards's id, can be useful to filter cards server-side.
 #' @param title Optional title, it will be wrapped in a H3 tag and can be updated from the server.
@@ -284,7 +284,10 @@ shuffle_card <- function(..., groups = NULL, id = NULL, title = NULL,
   nargs <- names(args)
   has_names <- nzchar(nargs)
   if (length(has_names) > 0) {
-    names(args)[has_names] <- paste0("data-", names(args)[has_names])
+    args <- c(
+      args[-has_names],
+      make_data_attr(args[has_names])
+    )
   }
   if (!is.null(title)) {
     title <- list(tags$h4(title, class = "sc-title"))
@@ -311,4 +314,26 @@ shuffle_card <- function(..., groups = NULL, id = NULL, title = NULL,
   return(tag_el)
 }
 
+
+#' @importFrom jsonlite toJSON
+#' @importFrom stats setNames
+make_data_attr <- function(attrs) {
+  if (any(grepl(pattern = "[^[:alnum:]]", x = names(attrs)))) {
+    warning("shuffle_card: You should avoid special characters in named arguments", call. = FALSE)
+  }
+  attrs <- lapply(
+    X = setNames(attrs, names(attrs)),
+    FUN = function(x) {
+      if (length(x) > 1) {
+        warning("shuffle_card: Named elements in '...' must be of length one, keeping first one", call. = FALSE)
+        x <- x[1]
+      }
+      x
+    }
+  )
+  is_num <- vapply(attrs, is.numeric, logical(1))
+  names(attrs) <- paste0("data-", names(attrs))
+  attrs[["data-sc-isnum"]] <- jsonlite::toJSON(x = names(is_num)[is_num])
+  attrs
+}
 
