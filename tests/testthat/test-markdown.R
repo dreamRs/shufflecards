@@ -6,7 +6,6 @@ test_that("arrange_button works", {
 
   expect_is(btn, "shiny.tag")
   expect_identical(btn$attribs$`data-sort-by`, "value")
-  expect_identical(btn$attribs$`data-sort-numeric`, "false")
   expect_identical(btn$attribs$`data-sort-decreasing`, "false")
 })
 

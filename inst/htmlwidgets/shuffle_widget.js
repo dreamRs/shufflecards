@@ -72,9 +72,8 @@ HTMLWidgets.widget({
                   reverse: decreasing,
                   by: function(element) {
                     var sortVal = element.getAttribute('data-' + sortBy);
-                    if (numeric === "true") {
-                      sortVal = parseFloat(sortVal);
-                    }
+                    var isnum = JSON.parse(element.getAttribute('data-sc-isnum'));
+                    sortVal = isnum.indexOf(sortBy) < 0 ? sortVal : parseFloat(sortVal);
                     return sortVal;
                   }
                 });

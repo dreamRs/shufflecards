@@ -93,7 +93,7 @@ rmd_group_buttons(
   shuffleId = "mygrid", label = "Click to arrange charts:",
   arrange_button("Sort by name", "key", icon = icon("sort-alpha-asc")),
   arrange_button("Sort by continent", "continent", icon = icon("sort-alpha-asc")),
-  arrange_button("Sort by maximal GDP", "maxGDP", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-asc")),
+  arrange_button("Sort by maximal GDP", "maxGDP", desc = TRUE, icon = icon("sort-numeric-asc")),
   arrange_button("Random!", "random", icon = icon("random"))
 )
 ```

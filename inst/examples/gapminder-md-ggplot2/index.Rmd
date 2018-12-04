@@ -69,8 +69,8 @@ plot_data <- function(cntr) {
 bscols(widths = c(8, 4),
   rmd_group_buttons(
     shuffleId = "grid", label = "Click to sort cards !",
-    arrange_button("Sort by life expectancy", "lifeExp", numeric = TRUE, icon = icon("sort-numeric-asc")),
-    arrange_button("Sort by life expectancy (decreasing)", "lifeExp", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-desc")),
+    arrange_button("Sort by life expectancy", "lifeExp", icon = icon("sort-numeric-asc")),
+    arrange_button("Sort by life expectancy (decreasing)", "lifeExp", desc = TRUE, icon = icon("sort-numeric-desc")),
     arrange_button("Sort by country", "key", icon = icon("sort-alpha-asc")),
     arrange_button("Random!", "random", icon = icon("random"))
   ),

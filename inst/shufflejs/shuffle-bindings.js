@@ -129,9 +129,8 @@
             reverse: decreasing,
             by: function(element) {
               var sortVal = element.getAttribute('data-' + sortBy);
-              if (numeric === "true") {
-                sortVal = parseFloat(sortVal);
-              }
+              var isnum = JSON.parse(element.getAttribute('data-sc-isnum'));
+              sortVal = isnum.indexOf(sortBy) < 0 ? sortVal : parseFloat(sortVal);
               return sortVal;
             }
           });
@@ -246,9 +245,8 @@ if (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings) {
             reverse: data.decreasing,
             by: function(element) {
               var sortVal = element.getAttribute('data-' + data.sortBy);
-              if (data.numeric) {
-                sortVal = parseFloat(sortVal);
-              }
+              var isnum = JSON.parse(element.getAttribute('data-sc-isnum'));
+              sortVal = isnum.indexOf(data.sortBy) < 0 ? sortVal : parseFloat(sortVal);
               return sortVal;
             }
           });

@@ -13,16 +13,14 @@ test_that("arrange_cards works", {
   expect_identical(session$lastInputMessage$id, "grid")
   expect_identical(session$lastInputMessage$message$type, "sort")
   expect_identical(session$lastInputMessage$message$sortBy, "value")
-  expect_identical(session$lastInputMessage$message$numeric, FALSE)
   expect_identical(session$lastInputMessage$message$decreasing, FALSE)
   expect_identical(session$lastInputMessage$message$random, FALSE)
 
-  arrange_cards(session, "grid", by = "value2", numeric = TRUE, desc = TRUE)
+  arrange_cards(session, "grid", by = "value2", desc = TRUE)
 
   expect_identical(session$lastInputMessage$id, "grid")
   expect_identical(session$lastInputMessage$message$type, "sort")
   expect_identical(session$lastInputMessage$message$sortBy, "value2")
-  expect_identical(session$lastInputMessage$message$numeric, TRUE)
   expect_identical(session$lastInputMessage$message$decreasing, TRUE)
   expect_identical(session$lastInputMessage$message$random, FALSE)
 })

@@ -42,8 +42,8 @@ shared_deck <- SharedData$new(deck, key = deck$key)
 ```{r}
 rmd_group_buttons(
   shuffleId = "grid", label = "Click to sort cards !",
-  arrange_button("Sort by value", "cardVal", numeric = TRUE, icon = icon("sort-numeric-asc")),
-  arrange_button("Sort by value (decreasing)", "cardVal", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-desc")),
+  arrange_button("Sort by value", "cardVal", icon = icon("sort-numeric-asc")),
+  arrange_button("Sort by value (decreasing)", "cardVal", desc = TRUE, icon = icon("sort-numeric-desc")),
   arrange_button("Sort by suits", "cardSuits", icon = icon("sort-alpha-asc")),
   arrange_button("Random!", "random", icon = icon("random"))
 )

@@ -4,7 +4,6 @@
 #' @param session The \code{session} object passed to function given to shinyServer.
 #' @param shuffleId The id of the shuffle container.
 #' @param by Key(s) defined in \code{shuffle_card} to sort elements.
-#' @param numeric Logical, set to \code{TRUE} if key is a numeric value.
 #' @param desc Logical, set to \code{TRUE} to sort in decreasing order.
 #'
 #' @export
@@ -28,8 +27,10 @@
 #'         radioButtons(
 #'           inputId = "sort",
 #'           label = "Sort by:",
-#'           choices = c("Ascending order",
-#'                       "Descending order",
+#'           choices = c("Ascending order (numeric)",
+#'                       "Descending order (numeric)",
+#'                       "Ascending order (character)",
+#'                       "Descending order (character)",
 #'                       "Random!")
 #'         )
 #'       ),
@@ -41,7 +42,8 @@
 #'             X = 1:12,
 #'             FUN = function(i) {
 #'               shuffle_card(
-#'                 value = i, # used to sort
+#'                 value_num = i,
+#'                 value_char = as.character(i), # used to sort
 #'                 plotOutput(
 #'                   outputId = paste0("plot", i),
 #'                   width = "250px",
@@ -69,20 +71,34 @@
 #'
 #'     # Sorts ----
 #'     observe({
-#'       if (input$sort == "Ascending order") {
-#'         arrange_cards(session, "gridNum", "value", numeric = TRUE)
-#'       } else if (input$sort == "Descending order") {
-#'         arrange_cards(session, "gridNum", "value", numeric = TRUE, desc = TRUE)
-#'       } else {
+#'       if (input$sort == "Ascending order (numeric)") {
+#'
+#'         arrange_cards(session, "gridNum", "value_num")
+#'
+#'       } else if (input$sort == "Descending order (numeric)") {
+#'
+#'         arrange_cards(session, "gridNum", "value_num", desc = TRUE)
+#'
+#'       } else if (input$sort == "Ascending order (character)") {
+#'
+#'         arrange_cards(session, "gridNum", "value_char")
+#'
+#'       } else if (input$sort == "Descending order (character)") {
+#'
+#'         arrange_cards(session, "gridNum", "value_char", desc = TRUE)
+#'
+#'       } else{
+#'
 #'         randomize_cards(session, "gridNum")
+#'
 #'       }
 #'     })
 #'   }
 #'
 #'   shinyApp(ui, server)
 #' }
-arrange_cards <- function(session, shuffleId, by, numeric = FALSE, desc = FALSE) {
-  message <- list(type = "sort", sortBy = by, numeric = numeric, decreasing = desc, random = FALSE)
+arrange_cards <- function(session, shuffleId, by, desc = FALSE) {
+  message <- list(type = "sort", sortBy = by, decreasing = desc, random = FALSE)
   session$sendInputMessage(shuffleId, message)
 }
 

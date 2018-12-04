@@ -4,15 +4,13 @@
 \alias{arrange_button}
 \title{Buttons for markdown document}
 \usage{
-arrange_button(label, by, numeric = FALSE, desc = FALSE,
-  status = "default", icon = NULL, width = NULL, ...)
+arrange_button(label, by, desc = FALSE, status = "default",
+  icon = NULL, width = NULL, ...)
 }
 \arguments{
 \item{label}{The contents of the button.}
 
 \item{by}{Key(s) defined in \code{shuffle_card} to sort elements.}
-
-\item{numeric}{Logical, set to \code{TRUE} if key is a numeric value.}
 
 \item{desc}{Logical, set to \code{TRUE} to sort in decreasing order.}
 

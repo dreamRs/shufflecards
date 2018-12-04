@@ -31,8 +31,8 @@ deck$order <- as.numeric(deck$values)
 ```{r}
 rmd_group_buttons(
   shuffleId = "grid", label = "Click to sort cards !",
-  arrange_button("Sort by value", "cardVal", numeric = TRUE, icon = icon("sort-numeric-asc")),
-  arrange_button("Sort by value (decreasing)", "cardVal", numeric = TRUE, desc = TRUE, icon = icon("sort-numeric-desc")),
+  arrange_button("Sort by value", "cardVal", icon = icon("sort-numeric-asc")),
+  arrange_button("Sort by value (decreasing)", "cardVal", desc = TRUE, icon = icon("sort-numeric-desc")),
   arrange_button("Sort by suits", "cardSuits", icon = icon("sort-alpha-asc")),
   arrange_button("Random!", "random", icon = icon("random"))
 )
@@ -41,7 +41,7 @@ rmd_group_buttons(
 
 <!-- shuffle grid layout -->
 ```{r}
-shuffle_container(
+shuffle_widget(
   shuffleId = "grid",
   no_card = "No card to display!",
   card_list = lapply(

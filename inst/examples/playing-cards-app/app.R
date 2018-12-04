@@ -79,10 +79,10 @@ server <- function(input, output, session) {
 
   # Sorting ----
   observeEvent(input$sortValue, {
-    arrange_cards(session, "grid", "cardVal", numeric = TRUE)
+    arrange_cards(session, "grid", "cardVal")
   })
   observeEvent(input$sortValueDesc, {
-    arrange_cards(session, "grid", "cardVal", numeric = TRUE, desc = TRUE)
+    arrange_cards(session, "grid", "cardVal", desc = TRUE)
   })
   observeEvent(input$sortSuit, {
     arrange_cards(session, "grid", "cardSuits")

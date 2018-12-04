@@ -75,7 +75,7 @@ ui <- fluidPage(
         shuffle_card(
           groups = continent, # Use for filter
           country = x, # for sorting
-          lifeExp = lifeExp, # for sorting
+          lifeExp = as.character(lifeExp), # for sorting
           plotOutput(outputId = x, width = "300px", height = "300px")
         )
       }

@@ -6,7 +6,7 @@
 \alias{randomize_cards}
 \title{Arrange cards in a Shuffle grid layout}
 \usage{
-arrange_cards(session, shuffleId, by, numeric = FALSE, desc = FALSE)
+arrange_cards(session, shuffleId, by, desc = FALSE)
 
 randomize_cards(session, shuffleId)
 }
@@ -16,8 +16,6 @@ randomize_cards(session, shuffleId)
 \item{shuffleId}{The id of the shuffle container.}
 
 \item{by}{Key(s) defined in \code{shuffle_card} to sort elements.}
-
-\item{numeric}{Logical, set to \code{TRUE} if key is a numeric value.}
 
 \item{desc}{Logical, set to \code{TRUE} to sort in decreasing order.}
 }
@@ -41,8 +39,10 @@ if (interactive()) {
         radioButtons(
           inputId = "sort",
           label = "Sort by:",
-          choices = c("Ascending order",
-                      "Descending order",
+          choices = c("Ascending order (numeric)",
+                      "Descending order (numeric)",
+                      "Ascending order (character)",
+                      "Descending order (character)",
                       "Random!")
         )
       ),
@@ -54,7 +54,8 @@ if (interactive()) {
             X = 1:12,
             FUN = function(i) {
               shuffle_card(
-                value = i, # used to sort
+                value_num = i,
+                value_char = as.character(i), # used to sort
                 plotOutput(
                   outputId = paste0("plot", i),
                   width = "250px",
@@ -82,12 +83,26 @@ if (interactive()) {
 
     # Sorts ----
     observe({
-      if (input$sort == "Ascending order") {
-        arrange_cards(session, "gridNum", "value", numeric = TRUE)
-      } else if (input$sort == "Descending order") {
-        arrange_cards(session, "gridNum", "value", numeric = TRUE, desc = TRUE)
-      } else {
+      if (input$sort == "Ascending order (numeric)") {
+
+        arrange_cards(session, "gridNum", "value_num")
+
+      } else if (input$sort == "Descending order (numeric)") {
+
+        arrange_cards(session, "gridNum", "value_num", desc = TRUE)
+
+      } else if (input$sort == "Ascending order (character)") {
+
+        arrange_cards(session, "gridNum", "value_char")
+
+      } else if (input$sort == "Descending order (character)") {
+
+        arrange_cards(session, "gridNum", "value_char", desc = TRUE)
+
+      } else{
+
         randomize_cards(session, "gridNum")
+
       }
     })
   }
