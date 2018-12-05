@@ -285,7 +285,7 @@ shuffle_card <- function(..., groups = NULL, id = NULL, title = NULL,
   has_names <- nzchar(nargs)
   if (length(has_names) > 0) {
     args <- c(
-      args[-has_names],
+      args[!has_names],
       make_data_attr(args[has_names])
     )
   }
