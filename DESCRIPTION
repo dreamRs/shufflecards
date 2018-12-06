@@ -1,6 +1,6 @@
 Package: shufflecards
 Title: Filter and Sort Grid Layouts in 'Shiny' and 'Markdown'
-Version: 0.0.1.9430
+Version: 0.0.1.9440
 Authors@R: c(person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Glen", "Cheney", role = "cph", comment = "shufflejs library"),

@@ -4,14 +4,22 @@ author: "dreamRs"
 output: html_document
 ---
 
+<!-- custom CSS to make the document full width -->
+```{css, echo=FALSE}
+.main-container {
+  max-width: 95% !important;
+}
+```
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(shufflecards)
 library(shiny)
 
 packages <- c("dplyr", "ggplot2", "r2d3", "lubridate", "readxl", "readr",
-              "stringr", "devtools", "knitr", "shiny", "rmarkdown", "plumber-female",
-              "sparklyr", "testthat", "purrr", "glue")
+              "stringr", "devtools", "knitr", "shiny", "rmarkdown", "feather",
+              "sparklyr", "testthat", "purrr", "glue", "roxygen2")
 url_png <- "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/%s.png"
 ```
 
@@ -29,15 +37,28 @@ rmd_group_buttons(
 
 
 <!-- shuffle grid layout -->
-```{r}
+```{r message=FALSE, warning=FALSE}
 shuffle_widget(
   shuffleId = "grid-packages",
   card_list = lapply(
     X = packages,
     FUN = function(package) {
+      title <- suppressWarnings(packageDescription(package))
+      if (!is.na(title)) {
+        title <- title$Title
+      }
       shuffle_card(
+        width = "200px",
         name = package, # for sorting
-        tags$img(src = sprintf(url_png, package), width="100")
+        thumbnail(
+        title = package,
+        media = tags$img(
+          src = sprintf(url_png, package), width="190"
+        ),
+        content = tags$div(
+          style = "height: 80px;", title
+        )
+      )
       )
     }
   )
