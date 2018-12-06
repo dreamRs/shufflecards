@@ -1,0 +1,45 @@
+---
+title: "Shufflecards with images"
+author: "dreamRs"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(shufflecards)
+library(shiny)
+
+packages <- c("dplyr", "ggplot2", "r2d3", "lubridate", "readxl", "readr",
+              "stringr", "devtools", "knitr", "shiny", "rmarkdown", "plumber-female",
+              "sparklyr", "testthat", "purrr", "glue")
+url_png <- "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/%s.png"
+```
+
+Create a sortable grid of hex stickers (with hex stickers from RStudio available [here](https://github.com/rstudio/hex-stickers))
+
+<!-- sorting buttons -->
+```{r}
+rmd_group_buttons(
+  shuffleId = "grid-packages", label = "Click to sort packages !",
+  arrange_button("Sort by name", "name", icon = icon("sort-alpha-asc")),
+  arrange_button("Sort by name (decreasing)", "name", desc = TRUE, icon = icon("sort-alpha-desc")),
+  arrange_button("Random!", "random", icon = icon("random"))
+)
+```
+
+
+<!-- shuffle grid layout -->
+```{r}
+shuffle_widget(
+  shuffleId = "grid-packages",
+  card_list = lapply(
+    X = packages,
+    FUN = function(package) {
+      shuffle_card(
+        name = package, # for sorting
+        tags$img(src = sprintf(url_png, package), width="100")
+      )
+    }
+  )
+)
+```
