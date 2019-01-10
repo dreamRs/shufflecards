@@ -4,7 +4,7 @@
 \alias{thumbnail}
 \title{Bootstrap thumbnail}
 \usage{
-thumbnail(title, media, content, href = NULL)
+thumbnail(title, media, content, href = NULL, height = NULL)
 }
 \arguments{
 \item{title}{Title of the thumbnail.}
@@ -14,6 +14,8 @@ thumbnail(title, media, content, href = NULL)
 \item{content}{Description to be placed in the thumbnail.}
 
 \item{href}{URL to redirect when media or title is clicked.}
+
+\item{height}{Height of the thumbnail.}
 }
 \description{
 Bootstrap thumbnail

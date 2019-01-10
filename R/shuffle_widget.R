@@ -32,7 +32,7 @@ shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = 
   cards <- validate_cards(cards, shuffleId)
   args <- args[nzchar(nargs) > 0]
 
-  options$itemSelector <- ".element-item"
+  options$options$itemSelector <- ".element-item"
 
   rendered_tags <- renderTags(x = cards)
   rendered_nocard <- doRenderTags(no_card)

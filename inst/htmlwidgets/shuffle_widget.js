@@ -13,7 +13,7 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
-        console.log(x.settings.crosstalk_key);
+        console.log(x.options);
 
         // add html markup
         el.innerHTML = x.html;
@@ -21,7 +21,7 @@ HTMLWidgets.widget({
         // Create Shuffle grid
         var element = document.getElementById(id);
         element.classList.add("shuffle-container");
-        var shuffleInstance = new Shuffle(element, x.options);
+        var shuffleInstance = new Shuffle(element, x.options.options);
 
         // No card
         var nocard = document.createElement('div');
