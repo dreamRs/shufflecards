@@ -25,7 +25,7 @@ thumbnail <- function(title, media, content, href = NULL) {
         class = "item-image", style = "text-align: center;", media
       )
     ),
-    tags$h4(tag$b(tags$a(title, href = href, target = "_blank"))),
+    tags$h4(tags$b(tags$a(title, href = href, target = "_blank"))),
     content
   )
 }
