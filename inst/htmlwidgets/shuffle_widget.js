@@ -67,13 +67,28 @@ HTMLWidgets.widget({
               var decreasing = button.getAttribute('data-sort-decreasing') === "true";
               if (sortBy == "random") {
                 shuffleInstance.sort({randomize: true});
+              } else if (sortBy == "random2") {
+                shuffleInstance.sort({
+                  reverse: decreasing,
+                  by: function(element) {
+                    if (element.hasAttribute("data-exclude-sort")) {
+                      return undefined;
+                    }
+                    return Math.random();
+                  }
+                });
               } else {
                 shuffleInstance.sort({
                   reverse: decreasing,
                   by: function(element) {
+                    if (element.hasAttribute("data-exclude-sort")) {
+                      return undefined;
+                    }
                     var sortVal = element.getAttribute('data-' + sortBy);
                     var isnum = JSON.parse(element.getAttribute('data-sc-isnum'));
-                    sortVal = isnum.indexOf(sortBy) < 0 ? sortVal : parseFloat(sortVal);
+                    if (isnum !== null) {
+                      sortVal = isnum.indexOf(sortBy) < 0 ? sortVal : parseFloat(sortVal);
+                    }
                     return sortVal;
                   }
                 });

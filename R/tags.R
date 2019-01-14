@@ -318,7 +318,7 @@ shuffle_card <- function(..., groups = NULL, id = NULL, title = NULL,
 #' @importFrom jsonlite toJSON
 #' @importFrom stats setNames
 make_data_attr <- function(attrs) {
-  if (any(grepl(pattern = "[^[:alnum:]]", x = names(attrs)))) {
+  if (any(grepl(pattern = "[^[:alnum:]-]", x = names(attrs)))) {
     warning("shuffle_card: You should avoid special characters in named arguments", call. = FALSE)
   }
   attrs <- lapply(
