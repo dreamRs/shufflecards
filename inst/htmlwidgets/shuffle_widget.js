@@ -13,7 +13,7 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
-        console.log(x.options);
+        // console.log(x.options);
 
         // add html markup
         el.innerHTML = x.html;
@@ -82,7 +82,7 @@ HTMLWidgets.widget({
                   reverse: decreasing,
                   by: function(element) {
                     if (element.hasAttribute("data-exclude-sort")) {
-                      return undefined;
+                      return null;
                     }
                     var sortVal = element.getAttribute('data-' + sortBy);
                     var isnum = JSON.parse(element.getAttribute('data-sc-isnum'));
