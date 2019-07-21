@@ -28,5 +28,6 @@ where a row represent a \code{\link{shuffle_card}} and can be used for filter th
 Needed to associate the widget to \code{\link{rmd_group_buttons}}.}
 }
 \description{
-Create a grid layout in markdown. Arrange the grid with \code{\link{arrange_button}}s and filter it with crosstalk inputs.
+Create a grid layout in \strong{RMarkdown}.
+ Arrange the grid with \code{\link{arrange_button}}s and filter it with crosstalk inputs.
 }

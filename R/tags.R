@@ -1,6 +1,8 @@
 
 
-#' Create a Shuffle container
+#' @title Create a Shuffle container
+#'
+#' @description Use this function inside the UI of a \strong{Shiny} application to define a Shuffle layout.
 #'
 #' @param shuffleId Shuffle's id.
 #' @param ... List of \code{shuffle_card}s to include.
@@ -181,7 +183,10 @@ shuffle_options <- function(is_centered = NULL, column_width = NULL, gutter_widt
 }
 
 
-#' Shuffle card element
+#' @title Shuffle card element
+#'
+#' @description This function can be used in \strong{Shiny}
+#'  applications and \strong{RMarkdown} documents to define cards inside a Shuffle layout.
 #'
 #' @param ... UI elements to include within the card. Named elements canb be used to arrange cards.
 #' @param groups Character vector of groups used to filtering.
@@ -191,7 +196,8 @@ shuffle_options <- function(is_centered = NULL, column_width = NULL, gutter_widt
 #' @param closable Logical, add a button to remove the card, can't be reversed!
 #' @param class CSS class(es) to apply on the card.
 #' @param style Inline CSS to apply on the card.
-#' @param width,height The width / height of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
+#' @param width,height The width / height of the container, e.g.
+#'  \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
 #'
 #' @export
 #'

@@ -1,6 +1,7 @@
-#' Htmlwidget for 'Shuffle.js'
+#' @title Htmlwidget for 'Shuffle.js'
 #'
-#' Create a grid layout in markdown. Arrange the grid with \code{\link{arrange_button}}s and filter it with crosstalk inputs.
+#' @description Create a grid layout in \strong{RMarkdown}.
+#'  Arrange the grid with \code{\link{arrange_button}}s and filter it with crosstalk inputs.
 #'
 #' @param ... List of \code{shuffle_card}s to include.
 #' @param card_list Alternative list of \code{shuffle_card}s to include.

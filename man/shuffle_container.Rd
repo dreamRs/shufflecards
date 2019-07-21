@@ -21,7 +21,7 @@ shuffle_container(shuffleId, ..., card_list = NULL,
 \item{width}{The width of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
 }
 \description{
-Create a Shuffle container
+Use this function inside the UI of a \strong{Shiny} application to define a Shuffle layout.
 }
 \examples{
 if (interactive()) {

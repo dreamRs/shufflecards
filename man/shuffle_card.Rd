@@ -25,10 +25,12 @@ shuffle_card(..., groups = NULL, id = NULL, title = NULL,
 
 \item{style}{Inline CSS to apply on the card.}
 
-\item{width, height}{The width / height of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
+\item{width, height}{The width / height of the container, e.g.
+\code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
 }
 \description{
-Shuffle card element
+This function can be used in \strong{Shiny}
+ applications and \strong{RMarkdown} documents to define cards inside a Shuffle layout.
 }
 \examples{
 if (interactive()) {
