@@ -4,17 +4,18 @@
 \alias{remove_card}
 \title{Remove a card in a Shuffle grid}
 \usage{
-remove_card(session, shuffleId, cardId)
+remove_card(shuffleId, cardId,
+  session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
-\item{session}{The \code{session} object passed to function given to shinyServer.}
-
 \item{shuffleId}{The id of the shuffle container.}
 
 \item{cardId}{The id of the card to remove.}
+
+\item{session}{The \code{session} object passed to function given to shinyServer.}
 }
 \description{
-Remove a card in a Shuffle grid
+Use in a \strong{Shiny} app to remove a card from layout.
 }
 \examples{
 if (interactive()) {
@@ -64,7 +65,7 @@ if (interactive()) {
 
   server <- function(input, output, session) {
     observeEvent(input$remove, {
-      remove_card(session, "grid", input$select)
+      remove_card("grid", input$select)
     }, ignoreInit = TRUE)
   }
 

@@ -1,13 +1,16 @@
-#' Add a card in a Shuffle grid
+
+#' @title Add a card in a Shuffle grid
 #'
-#' @param session The \code{session} object passed to function given to shinyServer.
+#' @description Use in a \strong{Shiny} app to add card(s) to an existing Shuffle grid.
+#'
 #' @param shuffleId The id of the shuffle container.
 #' @param card A \code{\link{shuffle_card}} to add.
 #' @param where Where to add card : at the beginning or at the end. But careful
 #'  it can depends on the last arrangement made by the user ! (Check example)
+#' @param session The \code{session} object passed to function given to shinyServer.
 #'
 #' @importFrom htmltools doRenderTags tagAppendAttributes tags
-#' @importFrom shiny insertUI
+#' @importFrom shiny insertUI getDefaultReactiveDomain
 #' @export
 #'
 #' @examples
@@ -69,19 +72,19 @@
 #'
 #'     # Arrange ----
 #'     observeEvent(input$arrange, {
-#'       arrange_cards(session, "grid", "number", numeric = TRUE)
+#'       arrange_cards("grid", "number")
 #'     })
 #'     observeEvent(input$arrangedesc, {
-#'       arrange_cards(session, "grid", "number", numeric = TRUE, desc = TRUE)
+#'       arrange_cards("grid", "number", desc = TRUE)
 #'     })
 #'     observeEvent(input$random, {
-#'       randomize_cards(session, "grid")
+#'       randomize_cards("grid")
 #'     })
 #'   }
 #'
 #'   shinyApp(ui, server)
 #' }
-add_card <- function(session, shuffleId, card, where = c("after", "before")) {
+add_card <- function(shuffleId, card, where = c("after", "before"), session = shiny::getDefaultReactiveDomain()) {
   where <- match.arg(where)
   validate_card(card)
   addingTag <- tags$div()
@@ -113,15 +116,17 @@ add_card <- function(session, shuffleId, card, where = c("after", "before")) {
 
 
 
-#' Remove a card in a Shuffle grid
+#' @title Remove a card in a Shuffle grid
 #'
-#' @param session The \code{session} object passed to function given to shinyServer.
+#' @description Use in a \strong{Shiny} app to remove a card from layout.
+#'
 #' @param shuffleId The id of the shuffle container.
 #' @param cardId The id of the card to remove.
+#' @param session The \code{session} object passed to function given to shinyServer.
 #'
 #' @export
 #'
-#' @importFrom jsonlite toJSON
+#' @importFrom shiny getDefaultReactiveDomain
 #'
 #' @examples
 #' if (interactive()) {
@@ -171,16 +176,16 @@ add_card <- function(session, shuffleId, card, where = c("after", "before")) {
 #'
 #'   server <- function(input, output, session) {
 #'     observeEvent(input$remove, {
-#'       remove_card(session, "grid", input$select)
+#'       remove_card("grid", input$select)
 #'     }, ignoreInit = TRUE)
 #'   }
 #'
 #'   shinyApp(ui, server)
 #' }
-remove_card <- function(session, shuffleId, cardId) {
+remove_card <- function(shuffleId, cardId, session = shiny::getDefaultReactiveDomain()) {
   session$sendInputMessage(shuffleId, list(
     type = "remove",
-    id = jsonlite::toJSON(cardId, auto_unbox = FALSE)
+    id = if (length(cardId) == 1) list(cardId) else cardId
   ))
 }
 

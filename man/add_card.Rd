@@ -4,20 +4,21 @@
 \alias{add_card}
 \title{Add a card in a Shuffle grid}
 \usage{
-add_card(session, shuffleId, card, where = c("after", "before"))
+add_card(shuffleId, card, where = c("after", "before"),
+  session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
-\item{session}{The \code{session} object passed to function given to shinyServer.}
-
 \item{shuffleId}{The id of the shuffle container.}
 
 \item{card}{A \code{\link{shuffle_card}} to add.}
 
 \item{where}{Where to add card : at the beginning or at the end. But careful
 it can depends on the last arrangement made by the user ! (Check example)}
+
+\item{session}{The \code{session} object passed to function given to shinyServer.}
 }
 \description{
-Add a card in a Shuffle grid
+Use in a \strong{Shiny} app to add card(s) to an existing Shuffle grid.
 }
 \examples{
 if (interactive()) {
@@ -78,13 +79,13 @@ if (interactive()) {
 
     # Arrange ----
     observeEvent(input$arrange, {
-      arrange_cards(session, "grid", "number", numeric = TRUE)
+      arrange_cards("grid", "number")
     })
     observeEvent(input$arrangedesc, {
-      arrange_cards(session, "grid", "number", numeric = TRUE, desc = TRUE)
+      arrange_cards("grid", "number", desc = TRUE)
     })
     observeEvent(input$random, {
-      randomize_cards(session, "grid")
+      randomize_cards("grid")
     })
   }
 
