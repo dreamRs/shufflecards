@@ -6,21 +6,22 @@
 \alias{randomize_cards}
 \title{Arrange cards in a Shuffle grid layout}
 \usage{
-arrange_cards(session, shuffleId, by, desc = FALSE)
+arrange_cards(shuffleId, by, desc = FALSE,
+  session = shiny::getDefaultReactiveDomain())
 
-randomize_cards(session, shuffleId)
+randomize_cards(shuffleId, session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
-\item{session}{The \code{session} object passed to function given to shinyServer.}
-
 \item{shuffleId}{The id of the shuffle container.}
 
 \item{by}{Key(s) defined in \code{shuffle_card} to sort elements.}
 
 \item{desc}{Logical, set to \code{TRUE} to sort in decreasing order.}
+
+\item{session}{The \code{session} object passed to function given to shinyServer.}
 }
 \description{
-Arrange cards in a Shuffle grid layout
+Use in a \strong{Shiny} app to sort cards.
 }
 \examples{
 if (interactive()) {
@@ -85,23 +86,23 @@ if (interactive()) {
     observe({
       if (input$sort == "Ascending order (numeric)") {
 
-        arrange_cards(session, "gridNum", "value_num")
+        arrange_cards("gridNum", "value_num")
 
       } else if (input$sort == "Descending order (numeric)") {
 
-        arrange_cards(session, "gridNum", "value_num", desc = TRUE)
+        arrange_cards("gridNum", "value_num", desc = TRUE)
 
       } else if (input$sort == "Ascending order (character)") {
 
-        arrange_cards(session, "gridNum", "value_char")
+        arrange_cards("gridNum", "value_char")
 
       } else if (input$sort == "Descending order (character)") {
 
-        arrange_cards(session, "gridNum", "value_char", desc = TRUE)
+        arrange_cards("gridNum", "value_char", desc = TRUE)
 
       } else{
 
-        randomize_cards(session, "gridNum")
+        randomize_cards("gridNum")
 
       }
     })

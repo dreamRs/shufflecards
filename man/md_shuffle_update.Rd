@@ -13,5 +13,5 @@ md_shuffle_update(shuffleId, selector)
 you can use \href{https://selectorgadget.com/}{SelectorGadget} to find the proper selector.}
 }
 \description{
-Use this if you have Shuffle layout in tab panels in a markdown document.
+Use this if you have Shuffle layout in hidden tab panels in a markdown document.
 }

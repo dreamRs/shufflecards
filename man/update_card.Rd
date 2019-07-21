@@ -4,11 +4,10 @@
 \alias{update_card}
 \title{Update meta-data of a card}
 \usage{
-update_card(session, shuffleId, cardId, ..., title = NULL)
+update_card(shuffleId, cardId, ..., title = NULL,
+  session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
-\item{session}{The \code{session} object passed to function given to shinyServer.}
-
 \item{shuffleId}{The id of the shuffle container.}
 
 \item{cardId}{The id of the card to update}
@@ -16,9 +15,11 @@ update_card(session, shuffleId, cardId, ..., title = NULL)
 \item{...}{Attributes to update or set.}
 
 \item{title}{New title for the card.}
+
+\item{session}{The \code{session} object passed to function given to shinyServer.}
 }
 \description{
-Update meta-data of a card
+Use in a \strong{Shiny} app to update data associated to a card.
 }
 \examples{
 if (interactive()) {
@@ -83,21 +84,21 @@ if (interactive()) {
 
     # Update cards ----
     observeEvent(input$val1, {
-      update_card(session, "grid", "card1", myvalue = input$val1)
+      update_card("grid", "card1", myvalue = input$val1)
     }, ignoreInit = TRUE)
     observeEvent(input$val2, {
-      update_card(session, "grid", "card2", myvalue = input$val2)
+      update_card("grid", "card2", myvalue = input$val2)
     }, ignoreInit = TRUE)
     observeEvent(input$val3, {
-      update_card(session, "grid", "card3", myvalue = input$val3)
+      update_card("grid", "card3", myvalue = input$val3)
     }, ignoreInit = TRUE)
     observeEvent(input$val4, {
-      update_card(session, "grid", "card4", myvalue = input$val4)
+      update_card("grid", "card4", myvalue = input$val4)
     }, ignoreInit = TRUE)
 
     # Arrange ----
     observeEvent(input$arrange, {
-      arrange_cards(session, "grid", "myvalue", numeric = TRUE)
+      arrange_cards("grid", "myvalue", numeric = TRUE)
     })
   }
 

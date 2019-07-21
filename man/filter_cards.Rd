@@ -4,11 +4,10 @@
 \alias{filter_cards}
 \title{Filter a Shuffle grid layout with custom values}
 \usage{
-filter_cards(session, shuffleId, by, filters)
+filter_cards(shuffleId, by, filters,
+  session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
-\item{session}{The \code{session} object passed to function given to shinyServer.}
-
 \item{shuffleId}{The id of the shuffle container.}
 
 \item{by}{Key defined in \code{shuffle_card} to filter elements, can be \code{"id"}
@@ -23,9 +22,11 @@ to refer to the unique ID associated with the card.}
   - \strong{one-column data.frame:} where the column contains cards key to display (those absent will be hided)
 
   - \strong{character vector:} containing cards key to display}
+
+\item{session}{The \code{session} object passed to function given to shinyServer.}
 }
 \description{
-Filter a Shuffle grid layout with custom values
+Use in a \strong{Shiny} app to filter cards by a custom value.
 }
 \examples{
 if (interactive()) {

@@ -1,14 +1,18 @@
 
-#' Arrange cards in a Shuffle grid layout
+#' @title Arrange cards in a Shuffle grid layout
 #'
-#' @param session The \code{session} object passed to function given to shinyServer.
+#' @description Use in a \strong{Shiny} app to sort cards.
+#'
 #' @param shuffleId The id of the shuffle container.
 #' @param by Key(s) defined in \code{shuffle_card} to sort elements.
 #' @param desc Logical, set to \code{TRUE} to sort in decreasing order.
+#' @param session The \code{session} object passed to function given to shinyServer.
 #'
 #' @export
 #'
 #' @name arrange-cards
+#'
+#' @importFrom shiny getDefaultReactiveDomain
 #'
 #' @examples
 #' if (interactive()) {
@@ -73,23 +77,23 @@
 #'     observe({
 #'       if (input$sort == "Ascending order (numeric)") {
 #'
-#'         arrange_cards(session, "gridNum", "value_num")
+#'         arrange_cards("gridNum", "value_num")
 #'
 #'       } else if (input$sort == "Descending order (numeric)") {
 #'
-#'         arrange_cards(session, "gridNum", "value_num", desc = TRUE)
+#'         arrange_cards("gridNum", "value_num", desc = TRUE)
 #'
 #'       } else if (input$sort == "Ascending order (character)") {
 #'
-#'         arrange_cards(session, "gridNum", "value_char")
+#'         arrange_cards("gridNum", "value_char")
 #'
 #'       } else if (input$sort == "Descending order (character)") {
 #'
-#'         arrange_cards(session, "gridNum", "value_char", desc = TRUE)
+#'         arrange_cards("gridNum", "value_char", desc = TRUE)
 #'
 #'       } else{
 #'
-#'         randomize_cards(session, "gridNum")
+#'         randomize_cards("gridNum")
 #'
 #'       }
 #'     })
@@ -97,26 +101,30 @@
 #'
 #'   shinyApp(ui, server)
 #' }
-arrange_cards <- function(session, shuffleId, by, desc = FALSE) {
+arrange_cards <- function(shuffleId, by, desc = FALSE, session = shiny::getDefaultReactiveDomain()) {
   message <- list(type = "sort", sortBy = by, decreasing = desc, random = FALSE)
   session$sendInputMessage(shuffleId, message)
 }
 
 #' @export
 #' @rdname arrange-cards
-randomize_cards <- function(session, shuffleId) {
+randomize_cards <- function(shuffleId, session = shiny::getDefaultReactiveDomain()) {
   message <- list(type = "sort", random = TRUE)
   session$sendInputMessage(shuffleId, message)
 }
 
 
-#' Filter a Shuffle grid layout by groups
+#' @title Filter a Shuffle grid layout by groups
 #'
-#' @param session The \code{session} object passed to function given to shinyServer.
+#' @description Use in a \strong{Shiny} app to filter cards.
+#'
 #' @param shuffleId The id of the shuffle container.
 #' @param groups Groups (defined in \code{shuffle_card}) you want to display.
+#' @param session The \code{session} object passed to function given to shinyServer.
 #'
 #' @export
+#'
+#' @importFrom shiny getDefaultReactiveDomain
 #'
 #' @examples
 #' if (interactive()) {
@@ -181,14 +189,14 @@ randomize_cards <- function(session, shuffleId) {
 #'       }
 #'
 #'       # Pass a vector of groups to display
-#'       filter_cards_groups(session, "gridNum", type_num)
+#'       filter_cards_groups("gridNum", type_num)
 #'     })
 #'   }
 #'
 #'   shinyApp(ui, server)
 #' }
 #'
-filter_cards_groups <- function(session, shuffleId, groups) {
+filter_cards_groups <- function(shuffleId, groups, session = shiny::getDefaultReactiveDomain()) {
   if (length(groups) == 0)
     groups <- as.character(sample.int(1e6, 1))
   message <- list(type = "filter-groups", groups = groups)
@@ -197,9 +205,10 @@ filter_cards_groups <- function(session, shuffleId, groups) {
 
 
 
-#' Filter a Shuffle grid layout with custom values
+#' @title Filter a Shuffle grid layout with custom values
 #'
-#' @param session The \code{session} object passed to function given to shinyServer.
+#' @description Use in a \strong{Shiny} app to filter cards by a custom value.
+#'
 #' @param shuffleId The id of the shuffle container.
 #' @param by Key defined in \code{shuffle_card} to filter elements, can be \code{"id"}
 #'  to refer to the unique ID associated with the card.
@@ -212,6 +221,7 @@ filter_cards_groups <- function(session, shuffleId, groups) {
 #'   - \strong{one-column data.frame:} where the column contains cards key to display (those absent will be hided)
 #'
 #'   - \strong{character vector:} containing cards key to display
+#' @param session The \code{session} object passed to function given to shinyServer.
 #'
 #' @export
 #'
@@ -307,7 +317,7 @@ filter_cards_groups <- function(session, shuffleId, groups) {
 #'
 #'   shinyApp(ui, server)
 #' }
-filter_cards <- function(session, shuffleId, by, filters) {
+filter_cards <- function(shuffleId, by, filters, session = shiny::getDefaultReactiveDomain()) {
   stopifnot(is.character(by) & length(by) == 1)
   if (is.data.frame(filters)) {
     if (ncol(filters) > 1) {
@@ -350,29 +360,34 @@ filter_cards <- function(session, shuffleId, by, filters) {
 
 
 
-#' Update Shuffle Instance
+#' @title Update Shuffle Instance
 #'
-#' @param session The \code{session} object passed to function given to shinyServer.
+#' @description Use in a \strong{Shiny} app to update cards layout.
+#'
 #' @param shuffleId The id of the shuffle container.
+#' @param session The \code{session} object passed to function given to shinyServer.
 #'
 #' @note Can be useful when grid layout haven't been initialized correctly.
 #'
 #' @export
 #'
-update_shuffle <- function(session, shuffleId) {
+update_shuffle <- function(shuffleId, session = shiny::getDefaultReactiveDomain()) {
   session$sendInputMessage(shuffleId, list(type = "update"))
 }
 
 
 
 
-#' Update meta-data of a card
+#' @title Update meta-data of a card
 #'
-#' @param session The \code{session} object passed to function given to shinyServer.
+#' @description Use in a \strong{Shiny} app to update data associated to a card.
+#'
+#'
 #' @param shuffleId The id of the shuffle container.
 #' @param cardId The id of the card to update
 #' @param ... Attributes to update or set.
 #' @param title New title for the card.
+#' @param session The \code{session} object passed to function given to shinyServer.
 #'
 #' @export
 #'
@@ -439,27 +454,27 @@ update_shuffle <- function(session, shuffleId) {
 #'
 #'     # Update cards ----
 #'     observeEvent(input$val1, {
-#'       update_card(session, "grid", "card1", myvalue = input$val1)
+#'       update_card("grid", "card1", myvalue = input$val1)
 #'     }, ignoreInit = TRUE)
 #'     observeEvent(input$val2, {
-#'       update_card(session, "grid", "card2", myvalue = input$val2)
+#'       update_card("grid", "card2", myvalue = input$val2)
 #'     }, ignoreInit = TRUE)
 #'     observeEvent(input$val3, {
-#'       update_card(session, "grid", "card3", myvalue = input$val3)
+#'       update_card("grid", "card3", myvalue = input$val3)
 #'     }, ignoreInit = TRUE)
 #'     observeEvent(input$val4, {
-#'       update_card(session, "grid", "card4", myvalue = input$val4)
+#'       update_card("grid", "card4", myvalue = input$val4)
 #'     }, ignoreInit = TRUE)
 #'
 #'     # Arrange ----
 #'     observeEvent(input$arrange, {
-#'       arrange_cards(session, "grid", "myvalue", numeric = TRUE)
+#'       arrange_cards("grid", "myvalue", numeric = TRUE)
 #'     })
 #'   }
 #'
 #'   shinyApp(ui, server)
 #' }
-update_card <- function(session, shuffleId, cardId, ..., title = NULL) {
+update_card <- function(shuffleId, cardId, ..., title = NULL, session = shiny::getDefaultReactiveDomain()) {
   args <- list(...)
   if (length(args) > 0) {
     nargs <- names(args)

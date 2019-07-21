@@ -1,7 +1,7 @@
 
 #' Run examples of use of 'shufflecards'
 #'
-#' @param example Name of the example.
+#' @param example Name of the example, currently only option is \code{"gapminder"}.
 #'
 #' @export
 #'

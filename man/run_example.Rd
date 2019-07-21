@@ -7,7 +7,7 @@
 run_example(example = c("gapminder"))
 }
 \arguments{
-\item{example}{Name of the example.}
+\item{example}{Name of the example, currently only option is \code{"gapminder"}.}
 }
 \description{
 Run examples of use of 'shufflecards'

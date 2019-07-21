@@ -87,18 +87,18 @@ server <- function(input, output, session) {
 
   # Sorting ----
   observeEvent(input$sortLifeExp, {
-    arrange_cards(session, "grid", "lifeExp", numeric = TRUE)
+    arrange_cards("grid", "lifeExp")
   }, ignoreInit = TRUE)
   observeEvent(input$sortLifeExpDesc, {
-    arrange_cards(session, "grid", "lifeExp", numeric = TRUE, desc = TRUE)
+    arrange_cards("grid", "lifeExp", desc = TRUE)
   }, ignoreInit = TRUE)
   observeEvent(input$sortCountry, {
-    arrange_cards(session, "grid", "country")
+    arrange_cards("grid", "country")
   }, ignoreInit = TRUE)
 
   # Filter ----
   observeEvent(input$continent, {
-    filter_cards_groups(session, "grid", input$continent)
+    filter_cards_groups("grid", input$continent)
   }, ignoreNULL = FALSE, ignoreInit = TRUE)
 
 

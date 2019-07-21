@@ -96,7 +96,7 @@ init_md <- function(shuffleId) {
 
 #' Update Shuffle Layout in Markdown documentd
 #'
-#' Use this if you have Shuffle layout in tab panels in a markdown document.
+#' Use this if you have Shuffle layout in hidden tab panels in a markdown document.
 #'
 #' @param shuffleId The id of the shuffle container.
 #' @param selector Selector to trigger update, typically a button,
@@ -130,13 +130,14 @@ md_shuffle_update <- function(shuffleId, selector) {
 #' @param p A `ggplot2` object.
 #' @param width Width, in numeric and pixels.
 #' @param height Height, in numeric and pixels.
+#' @param ... Arguments passed to \code{\link[ggiraph]{girafe}}.
 #'
 #' @export
 #'
 #' @importFrom ggiraph girafe
 #' @importFrom htmltools HTML validateCssUnit
 #'
-as_girafe <- function(p, width = 400, height = 300) {
+as_girafe <- function(p, width = 400, height = 300, ...) {
   if (!inherits(p, what = "ggplot")) {
     stop("'p' must be of class 'ggplot'", call. = FALSE)
   }
@@ -148,6 +149,6 @@ as_girafe <- function(p, width = 400, height = 300) {
       paste0("width: ", validateCssUnit(width), ";"),
     style = if (!is.null(height))
       paste0("height: ", validateCssUnit(height), ";"),
-    girafe(print(p), width_svg = width/0.75/72, height_svg = height/0.75/72)
+    girafe(print(p), width_svg = width/0.75/72, height_svg = height/0.75/72, ...)
   )
 }

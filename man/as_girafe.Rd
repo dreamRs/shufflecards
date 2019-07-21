@@ -4,7 +4,7 @@
 \alias{as_girafe}
 \title{Convert a `ggplot2`  object to `ggiraph::girafe`}
 \usage{
-as_girafe(p, width = 400, height = 300)
+as_girafe(p, width = 400, height = 300, ...)
 }
 \arguments{
 \item{p}{A `ggplot2` object.}
@@ -12,6 +12,8 @@ as_girafe(p, width = 400, height = 300)
 \item{width}{Width, in numeric and pixels.}
 
 \item{height}{Height, in numeric and pixels.}
+
+\item{...}{Arguments passed to \code{\link[ggiraph]{girafe}}.}
 }
 \description{
 \code{\link{shuffle_widget}} generates HTML tags, to represent `ggplot2` objects you need to convert them.

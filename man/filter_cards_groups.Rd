@@ -4,17 +4,18 @@
 \alias{filter_cards_groups}
 \title{Filter a Shuffle grid layout by groups}
 \usage{
-filter_cards_groups(session, shuffleId, groups)
+filter_cards_groups(shuffleId, groups,
+  session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
-\item{session}{The \code{session} object passed to function given to shinyServer.}
-
 \item{shuffleId}{The id of the shuffle container.}
 
 \item{groups}{Groups (defined in \code{shuffle_card}) you want to display.}
+
+\item{session}{The \code{session} object passed to function given to shinyServer.}
 }
 \description{
-Filter a Shuffle grid layout by groups
+Use in a \strong{Shiny} app to filter cards.
 }
 \examples{
 if (interactive()) {
@@ -79,7 +80,7 @@ if (interactive()) {
       }
 
       # Pass a vector of groups to display
-      filter_cards_groups(session, "gridNum", type_num)
+      filter_cards_groups("gridNum", type_num)
     })
   }
 

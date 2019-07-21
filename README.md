@@ -16,14 +16,7 @@
 You can install `shufflecards` from GitHub:
 
 ```r
-# with remotes
 remotes::install_github("dreamRs/shufflecards")
-
-# or with install-github.me service (based on remotes)
-source("https://install-github.me/dreamRs/shufflecards")
-
-# or with devtools:
-devtools::install_github("dreamRs/shufflecards")
 ```
 
 
