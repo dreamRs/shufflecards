@@ -2,7 +2,7 @@
 #' @importFrom htmltools htmlDependency
 shuffle_dependencies <- function() {
   htmlDependency(
-    name = "shufflejs", version = "5.2.0",
+    name = "shufflejs", version = "5.2.2",
     src = list(href = "shufflejs", file = "shufflejs"), package = "shufflecards",
     script = c("shuffle.min.js", "shuffle-bindings.js"),
     stylesheet = "shuffle-custom.css"

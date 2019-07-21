@@ -1,6 +1,6 @@
 dependencies:
   - name: shufflejs
-    version: 5.2.0
+    version: 5.2.2
     src: shufflejs
     script: shuffle.min.js
     stylesheet: shuffle-custom.css
