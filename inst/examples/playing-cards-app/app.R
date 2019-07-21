@@ -75,25 +75,25 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
 
-  update_shuffle(session, "grid")
+  update_shuffle("grid")
 
   # Sorting ----
   observeEvent(input$sortValue, {
-    arrange_cards(session, "grid", "cardVal")
+    arrange_cards("grid", "cardVal")
   })
   observeEvent(input$sortValueDesc, {
-    arrange_cards(session, "grid", "cardVal", desc = TRUE)
+    arrange_cards("grid", "cardVal", desc = TRUE)
   })
   observeEvent(input$sortSuit, {
-    arrange_cards(session, "grid", "cardSuits")
+    arrange_cards("grid", "cardSuits")
   })
   observeEvent(input$random, {
-    randomize_cards(session, "grid")
+    randomize_cards("grid")
   })
 
   # Filtering ----
   observeEvent(input$suits, {
-    filter_cards_groups(session, "grid", input$suits)
+    filter_cards_groups("grid", input$suits)
   }, ignoreNULL = FALSE)
 
 }
