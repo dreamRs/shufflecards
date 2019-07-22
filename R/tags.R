@@ -9,7 +9,11 @@
 #' @param card_list Alternative list of \code{shuffle_card}s to include.
 #' @param options Options for Shuffle, see \code{\link{shuffle_options}}.
 #' @param no_card UI definition (or text) to display when all cards are filtered out.
-#' @param width The width of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
+#' @param use_bs_grid Allow to use Bootstrap grid system, e.g. same
+#'  as in \code{\link[shiny]{fluidRow}}. If \code{TRUE}, you can use
+#'  a width between 1 and 12 in \code{\link{shuffle_card}}.
+#' @param width The width of the container, e.g. \code{'400px'},
+#'  or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
 #'
 #' @export
 #'
@@ -60,7 +64,12 @@
 #'
 #'   shinyApp(ui, server)
 #' }
-shuffle_container <- function(shuffleId, ..., card_list = NULL, options = shuffle_options(), no_card = NULL, width = NULL) {
+shuffle_container <- function(shuffleId, ...,
+                              card_list = NULL,
+                              options = shuffle_options(),
+                              no_card = NULL,
+                              use_bs_grid = FALSE,
+                              width = NULL) {
   if (!(is.character(shuffleId) & length(shuffleId) == 1))
     stop("'shuffleId' must be a character of length one.", call. = FALSE)
   if (!inherits(options, "shuffle.options"))
@@ -73,7 +82,10 @@ shuffle_container <- function(shuffleId, ..., card_list = NULL, options = shuffl
   cards <- validate_cards(cards, shuffleId)
   args <- args[nzchar(nargs) > 0]
   shuffleTag <- tags$div(
-    id = shuffleId, class = "shuffle-container",
+    id = shuffleId,
+    class = "shuffle-container",
+    # class = if (!isTRUE(use_bs_grid)) "shuffle-container",
+    # class = if (isTRUE(use_bs_grid)) "row",
     style = if (!is.null(width))
       paste0("width: ", validateCssUnit(width), ";"),
     tagList(cards),
@@ -86,6 +98,12 @@ shuffle_container <- function(shuffleId, ..., card_list = NULL, options = shuffl
     )
   )
   shuffleTag <- do.call(tagAppendAttributes, c(list(tag = shuffleTag), args))
+  if (isTRUE(use_bs_grid)) {
+    shuffleTag <- tags$div(
+      class = "row",
+      shuffleTag
+    )
+  }
   tagList(
     attachDependencies(shuffleTag, shuffle_dependencies()),
     tags$div(no_card, id = paste0(shuffleId, "-nodata"), style = "display: none;", class = "shuffle-nodata"),
@@ -198,6 +216,8 @@ shuffle_options <- function(is_centered = NULL, column_width = NULL, gutter_widt
 #' @param style Inline CSS to apply on the card.
 #' @param width,height The width / height of the container, e.g.
 #'  \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
+#'  If \code{use_bs_grid} in \code{\link{shuffle_container}} is \code{TRUE},
+#'  use a width between 1 and 12, like in \code{\link[shiny]{column}}.
 #'
 #' @export
 #'
@@ -283,9 +303,16 @@ shuffle_options <- function(is_centered = NULL, column_width = NULL, gutter_widt
 #'
 #'   shinyApp(ui, server)
 #' }
-shuffle_card <- function(..., groups = NULL, id = NULL, title = NULL,
-                         border = FALSE, closable = FALSE,
-                         class = NULL, style = NULL, width = NULL, height = NULL) {
+shuffle_card <- function(...,
+                         groups = NULL,
+                         id = NULL,
+                         title = NULL,
+                         border = FALSE,
+                         closable = FALSE,
+                         class = NULL,
+                         style = NULL,
+                         width = NULL,
+                         height = NULL) {
   args <- list(...)
   nargs <- names(args)
   has_names <- nzchar(nargs)
@@ -305,15 +332,29 @@ shuffle_card <- function(..., groups = NULL, id = NULL, title = NULL,
   } else {
     closable <- NULL
   }
+  bs_cols <- NULL
+  if (!is.null(width)) {
+    if (is.numeric(width) && width <= 12) {
+      bs_cols <- paste0("col-sm-", width)
+      width <- NULL
+    } else {
+      bs_cols <- NULL
+      width <- paste0("width: ", validateCssUnit(width), ";")
+    }
+  }
   tag_el <- tag("div", c(closable, title, args))
   tag_attributes <- dropNulls(list(
-    id = id, class = class, class = "element-item", style = style,
+    id = id,
+    class = class,
+    class = "element-item",
+    class = if (!is.null(bs_cols)) bs_cols,
     class = if(isTRUE(border)) "sc-border",
-    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"),
+    style = style,
+    style = if (!is.null(width)) width,
     style = if (!is.null(height)) paste0("height: ", validateCssUnit(height), ";"),
-    `data-groups` = toJSON(as.character(groups)),
-    style = "margin: 5px;",
-    style = if(!is.null(closable) & is.null(title)) "padding-top: 30px;"
+    style = if (is.null(bs_cols)) "margin: 5px;",
+    style = if(!is.null(closable) & is.null(title)) "padding-top: 30px;",
+    `data-groups` = toJSON(as.character(groups))
   ))
   tag_el <- do.call(tagAppendAttributes, c(list(tag = tag_el), tag_attributes))
   class(tag_el) <- c(class(tag_el), "shufflecard.tag")
@@ -324,7 +365,7 @@ shuffle_card <- function(..., groups = NULL, id = NULL, title = NULL,
 #' @importFrom jsonlite toJSON
 #' @importFrom stats setNames
 make_data_attr <- function(attrs) {
-  if (any(grepl(pattern = "[^[:alnum:]-]", x = names(attrs)))) {
+  if (any(grepl(pattern = "[^[:alnum:]\\-_]", x = names(attrs)))) {
     warning("shuffle_card: You should avoid special characters in named arguments", call. = FALSE)
   }
   attrs <- lapply(

@@ -5,7 +5,8 @@
 \title{Create a Shuffle container}
 \usage{
 shuffle_container(shuffleId, ..., card_list = NULL,
-  options = shuffle_options(), no_card = NULL, width = NULL)
+  options = shuffle_options(), no_card = NULL, use_bs_grid = FALSE,
+  width = NULL)
 }
 \arguments{
 \item{shuffleId}{Shuffle's id.}
@@ -18,7 +19,12 @@ shuffle_container(shuffleId, ..., card_list = NULL,
 
 \item{no_card}{UI definition (or text) to display when all cards are filtered out.}
 
-\item{width}{The width of the container, e.g. \code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
+\item{use_bs_grid}{Allow to use Bootstrap grid system, e.g. same
+as in \code{\link[shiny]{fluidRow}}. If \code{TRUE}, you can use
+a width between 1 and 12 in \code{\link{shuffle_card}}.}
+
+\item{width}{The width of the container, e.g. \code{'400px'},
+or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
 }
 \description{
 Use this function inside the UI of a \strong{Shiny} application to define a Shuffle layout.

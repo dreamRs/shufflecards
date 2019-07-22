@@ -26,7 +26,9 @@ shuffle_card(..., groups = NULL, id = NULL, title = NULL,
 \item{style}{Inline CSS to apply on the card.}
 
 \item{width, height}{The width / height of the container, e.g.
-\code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
+\code{'400px'}, or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
+If \code{use_bs_grid} in \code{\link{shuffle_container}} is \code{TRUE},
+use a width between 1 and 12, like in \code{\link[shiny]{column}}.}
 }
 \description{
 This function can be used in \strong{Shiny}
