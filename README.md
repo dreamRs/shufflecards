@@ -8,7 +8,7 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 
-![](imgs/shufflecards.gif)
+![](man/figures/shufflecards.gif)
 
 
 
@@ -49,7 +49,7 @@ shufflecards::play()
 
 With data from `gapminder` package and `ggplot2`:
 
-![](imgs/shufflecards-gapminder.gif)
+![](man/figures/shufflecards-gapminder.gif)
 
 Run this example with :
 

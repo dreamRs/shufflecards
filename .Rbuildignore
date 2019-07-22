@@ -2,7 +2,6 @@
 ^shufflecards\.Rproj$
 ^\.Rproj\.user$
 ^shufflecards-play\.gif$
-^imgs$
 ^docs$
 ^inst/examples/.*/index_files$
 ^inst/examples/.*/index_files/.*\.html$
