@@ -2,7 +2,7 @@
 % Please edit documentation in R/markdown.R
 \name{md_shuffle_update}
 \alias{md_shuffle_update}
-\title{Update Shuffle Layout in Markdown documentd}
+\title{Update Shuffle Layout in \strong{RMarkdown} document}
 \usage{
 md_shuffle_update(shuffleId, selector)
 }

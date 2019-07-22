@@ -206,7 +206,7 @@ shuffle_options <- function(is_centered = NULL, column_width = NULL, gutter_widt
 #' @description This function can be used in \strong{Shiny}
 #'  applications and \strong{RMarkdown} documents to define cards inside a Shuffle layout.
 #'
-#' @param ... UI elements to include within the card. Named elements canb be used to arrange cards.
+#' @param ... UI elements to include within the card. Named elements can be used to arrange cards.
 #' @param groups Character vector of groups used to filtering.
 #' @param id Cards's id, can be useful to filter cards server-side.
 #' @param title Optional title, it will be wrapped in a H3 tag and can be updated from the server.

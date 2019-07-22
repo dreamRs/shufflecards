@@ -2,7 +2,7 @@
 % Please edit documentation in R/markdown.R
 \name{arrange_button}
 \alias{arrange_button}
-\title{Buttons for markdown document}
+\title{Buttons for \strong{RMarkdown} document}
 \usage{
 arrange_button(label, by, desc = FALSE, status = "default",
   icon = NULL, width = NULL, ...)
@@ -25,7 +25,7 @@ custom class, e.g. : with \code{status = 'myClass'}, buttons will have class \co
 \item{...}{Named attributes to be applied to the button.}
 }
 \description{
-Arrange a Shuffle grid in markdown
+Arrange a Shuffle grid in \strong{RMarkdown}.
 }
 \note{
 Use \code{\link{rmd_group_buttons}} to position several buttons.

@@ -1,9 +1,9 @@
 
-#' Group of buttons for Markdown documents
+#' Group of buttons for \strong{RMarkdown} documents
 #'
 #' @param shuffleId The id of the shuffle container.
 #' @param ... \code{\link{arrange_button}} buttons to include.
-#' @param label Optionnal label to display above buttons.
+#' @param label Optional label to display above buttons.
 #'
 #' @export
 #' @importFrom htmltools tagList tags
@@ -22,9 +22,9 @@ rmd_group_buttons <- function(shuffleId, ..., label = NULL) {
 }
 
 
-#' @title Buttons for markdown document
+#' @title Buttons for \strong{RMarkdown} document
 #'
-#' @description Arrange a Shuffle grid in markdown
+#' @description Arrange a Shuffle grid in \strong{RMarkdown}.
 #'
 #' @param label The contents of the button.
 #' @param by Key(s) defined in \code{shuffle_card} to sort elements.
@@ -94,9 +94,9 @@ init_md <- function(shuffleId) {
 
 
 
-#' Update Shuffle Layout in Markdown documentd
+#' @title Update Shuffle Layout in \strong{RMarkdown} document
 #'
-#' Use this if you have Shuffle layout in hidden tab panels in a markdown document.
+#' @description Use this if you have Shuffle layout in hidden tab panels in a markdown document.
 #'
 #' @param shuffleId The id of the shuffle container.
 #' @param selector Selector to trigger update, typically a button,
@@ -122,9 +122,9 @@ md_shuffle_update <- function(shuffleId, selector) {
 
 
 
-#' Convert a `ggplot2`  object to `ggiraph::girafe`
+#' @title Convert a `ggplot2`  object to `ggiraph::girafe`
 #'
-#' \code{\link{shuffle_widget}} generates HTML tags, to represent `ggplot2` objects you need to convert them.
+#' @description \code{\link{shuffle_widget}} generates HTML tags, to represent `ggplot2` objects you need to convert them.
 #' This is the purpose of this function, you can also use `ggiraph` or `plotly`.
 #'
 #' @param p A `ggplot2` object.

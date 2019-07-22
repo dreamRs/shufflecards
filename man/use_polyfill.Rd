@@ -13,12 +13,12 @@ It load a Polyfill from \url{https://polyfill.io/v2/docs/}.
 \examples{
 \dontrun{
 
-# Use in UI
+# Use in Shiny UI
 fluidPage(
   use_polyfill()
 )
 
-# Use in a chunk
+# Use in a RMarkdown chunk
 ```{r, echo=FALSE}
 shufflecards:::use_polyfill()
 ```

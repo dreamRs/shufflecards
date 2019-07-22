@@ -9,7 +9,7 @@ shuffle_card(..., groups = NULL, id = NULL, title = NULL,
   width = NULL, height = NULL)
 }
 \arguments{
-\item{...}{UI elements to include within the card. Named elements canb be used to arrange cards.}
+\item{...}{UI elements to include within the card. Named elements can be used to arrange cards.}
 
 \item{groups}{Character vector of groups used to filtering.}
 

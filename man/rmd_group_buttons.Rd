@@ -2,7 +2,7 @@
 % Please edit documentation in R/markdown.R
 \name{rmd_group_buttons}
 \alias{rmd_group_buttons}
-\title{Group of buttons for Markdown documents}
+\title{Group of buttons for \strong{RMarkdown} documents}
 \usage{
 rmd_group_buttons(shuffleId, ..., label = NULL)
 }
@@ -11,10 +11,10 @@ rmd_group_buttons(shuffleId, ..., label = NULL)
 
 \item{...}{\code{\link{arrange_button}} buttons to include.}
 
-\item{label}{Optionnal label to display above buttons.}
+\item{label}{Optional label to display above buttons.}
 }
 \description{
-Group of buttons for Markdown documents
+Group of buttons for \strong{RMarkdown} documents
 }
 \examples{
 # TODO

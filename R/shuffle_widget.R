@@ -1,3 +1,4 @@
+
 #' @title Htmlwidget for 'Shuffle.js'
 #'
 #' @description Create a grid layout in \strong{RMarkdown}.
@@ -85,9 +86,9 @@ shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = 
 }
 
 
-#' Add a dependency to Polyfill.io
+#' @title Add a dependency to Polyfill.io
 #'
-#' 'Shufflejs' doesn't work properly in Internet Explorer, you can use this function to make it work.
+#' @description 'Shufflejs' doesn't work properly in Internet Explorer, you can use this function to make it work.
 #' It load a Polyfill from \url{https://polyfill.io/v2/docs/}.
 #'
 #' @export
@@ -95,12 +96,12 @@ shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = 
 #' @examples
 #' \dontrun{
 #'
-#' # Use in UI
+#' # Use in Shiny UI
 #' fluidPage(
 #'   use_polyfill()
 #' )
 #'
-#' # Use in a chunk
+#' # Use in a RMarkdown chunk
 #' ```{r, echo=FALSE}
 #' shufflecards:::use_polyfill()
 #' ```
