@@ -5,8 +5,8 @@
 \title{Htmlwidget for 'Shuffle.js'}
 \usage{
 shuffle_widget(..., card_list = NULL, shared_data = NULL,
-  options = shuffle_options(), no_card = NULL, width = NULL,
-  height = NULL, shuffleId = NULL)
+  options = shuffle_options(), no_card = NULL, use_bs_grid = FALSE,
+  width = NULL, height = NULL, shuffleId = NULL)
 }
 \arguments{
 \item{...}{List of \code{shuffle_card}s to include.}
@@ -19,6 +19,10 @@ where a row represent a \code{\link{shuffle_card}} and can be used for filter th
 \item{options}{Options for Shuffle, see \code{\link{shuffle_options}}.}
 
 \item{no_card}{UI definition (or text) to display when all cards are filtered out.}
+
+\item{use_bs_grid}{Allow to use Bootstrap grid system, e.g. same
+as in \code{\link[shiny]{fluidRow}}. If \code{TRUE}, you can use
+a width between 1 and 12 in \code{\link{shuffle_card}}.}
 
 \item{width}{A numeric input in pixels.}
 

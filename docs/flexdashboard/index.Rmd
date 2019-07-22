@@ -3,16 +3,9 @@ title: "shufflecards with flexdashboard & crosstalk"
 output:
   flexdashboard::flex_dashboard:
     self_contained: false
+    vertical_layout: scroll
 ---
 
-
-<!-- content will not fit in the page -->
-```{css, echo=FALSE}
-html, body {
-  height: auto !important;
-  overflow-y: scroll !important;
-}
-```
 
 
 ```{r setup, include=FALSE}
@@ -81,7 +74,7 @@ filter_slider("gdp", "Filter by GDP:", gapminder_shared, ~max_gdpPercap, pre = "
 filter_select("continent", "Continent:", gapminder_shared, ~continent)
 ```
  
-Column
+Row
 -------------------------------------
 
 Code for this example is available [here](https://github.com/dreamRs/shufflecards/blob/master/inst/examples/gapminder-flexdashboard/index.Rmd).
@@ -97,23 +90,20 @@ rmd_group_buttons(
   arrange_button("Random!", "random", icon = icon("random"))
 )
 ```
-    
+
+
 <!-- grid of plots -->
 ```{r}
 shuffle_widget(
   shuffleId = "mygrid",
   shared_data = gapminder_shared,
   no_card = "No chart to display!",
-  options = shuffle_options(
-    is_centered = FALSE,
-    column_width = I("function(containerWidth) {return 0.32 * containerWidth;}"),
-    gutter_width = I("function(containerWidth) {return 0.01 * containerWidth;}")
-  ),
+  use_bs_grid = TRUE,
   card_list = lapply(
     X = countries_samp,
     FUN = function(x) {
       shuffle_card(
-        width = "32%",
+        width = 3,
         key = x, # for filtering
         continent = gapminder_summary %>% filter(country == x) %>% pull(continent), # for sorting
         maxGDP = gapminder_summary %>% filter(country == x) %>% pull(max_gdpPercap), # for sorting

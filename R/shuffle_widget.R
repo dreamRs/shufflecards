@@ -10,6 +10,9 @@
 #'  where a row represent a \code{\link{shuffle_card}} and can be used for filter the grid.
 #' @param options Options for Shuffle, see \code{\link{shuffle_options}}.
 #' @param no_card UI definition (or text) to display when all cards are filtered out.
+#' @param use_bs_grid Allow to use Bootstrap grid system, e.g. same
+#'  as in \code{\link[shiny]{fluidRow}}. If \code{TRUE}, you can use
+#'  a width between 1 and 12 in \code{\link{shuffle_card}}.
 #' @param width A numeric input in pixels.
 #' @param height A numeric input in pixels.
 #' @param shuffleId Use an explicit element ID for the widget.
@@ -21,8 +24,15 @@
 #' @importFrom crosstalk is.SharedData crosstalkLibs
 #'
 #' @export
-shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = shuffle_options(),
-                           no_card = NULL, width = NULL, height = NULL, shuffleId = NULL) {
+shuffle_widget <- function(...,
+                           card_list = NULL,
+                           shared_data = NULL,
+                           options = shuffle_options(),
+                           no_card = NULL,
+                           use_bs_grid = FALSE,
+                           width = NULL,
+                           height = NULL,
+                           shuffleId = NULL) {
 
   if (!inherits(options, "shuffle.options"))
     stop("'options' must be generated with 'shuffle_options'", call. = FALSE)
@@ -55,15 +65,13 @@ shuffle_widget <- function(..., card_list = NULL, shared_data = NULL, options = 
     html = rendered_tags$html,
     options = options,
     nocard = rendered_nocard,
+    use_bs_grid = isTRUE(use_bs_grid),
     settings = list(
       crosstalk_key = key,
       crosstalk_group = group
     )
   )
 
-
-
-  # create widget
   createWidget(
     name = 'shuffle_widget',
     x = x,
