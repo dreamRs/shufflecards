@@ -38,6 +38,7 @@
       this.addSorting();
 
       this.addSortButtons(element.id);
+      this.addRemoveButtons(element.id);
 
       element.addEventListener("shufflecardsupdate", this.updateInstance.bind(this), false);
 
@@ -128,12 +129,31 @@
             reverse: decreasing,
             by: function(element) {
               var sortVal = element.getAttribute('data-' + sortBy);
-              if (numeric === "true") {
-                sortVal = parseFloat(sortVal);
-              }
+              var isnum = JSON.parse(element.getAttribute('data-sc-isnum'));
+              sortVal = isnum.indexOf(sortBy) < 0 ? sortVal : parseFloat(sortVal);
               return sortVal;
             }
           });
+        }
+      }, true);
+    }, this);
+  };
+
+  shuffling.prototype.addRemoveButtons = function (id) {
+    var removebtn = document.querySelectorAll('.shufflecards-remove');
+    //console.log(removebtn);
+    if (!removebtn) {
+      return;
+    }
+
+    removebtn = Array.from(removebtn);
+    var shuffleproto = this;
+    removebtn.forEach(function (button) {
+      button.addEventListener('click', function(e) {
+        var el = button.parentNode;
+        var shufid = el.getAttribute('data-shuffleId');
+        if (shufid === id) {
+          shuffleproto.shuffle.remove([el]);
         }
       }, true);
     }, this);
@@ -202,9 +222,15 @@ if (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings) {
       // Update card
       if (type == 'update-card') {
         var elementUpdate = document.getElementById(data.id);
-        argsKey = Object.keys(data.args);
-        for (var i = 0; i < argsKey.length; i++) {
-          elementUpdate.setAttribute(argsKey[i], data.args[argsKey[i]]);
+        if (data.hasOwnProperty('args')) {
+          argsKey = Object.keys(data.args);
+          for (var i = 0; i < argsKey.length; i++) {
+            elementUpdate.setAttribute(argsKey[i], data.args[argsKey[i]]);
+          }
+        }
+        if (data.hasOwnProperty('title')) {
+          var elTitle = elementUpdate.querySelectorAll('.sc-title');
+          elTitle[0].innerText = data.title;
         }
       }
 
@@ -219,9 +245,8 @@ if (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings) {
             reverse: data.decreasing,
             by: function(element) {
               var sortVal = element.getAttribute('data-' + data.sortBy);
-              if (data.numeric) {
-                sortVal = parseFloat(sortVal);
-              }
+              var isnum = JSON.parse(element.getAttribute('data-sc-isnum'));
+              sortVal = isnum.indexOf(data.sortBy) < 0 ? sortVal : parseFloat(sortVal);
               return sortVal;
             }
           });

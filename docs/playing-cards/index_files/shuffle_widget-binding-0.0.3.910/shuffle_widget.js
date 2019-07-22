@@ -13,7 +13,13 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
-        console.log(x.settings.crosstalk_key);
+        // console.log(x.options);
+
+        if (x.use_bs_grid) {
+          el.classList.add("row");
+        } else {
+          el.style.margin = "auto";
+        }
 
         // add html markup
         el.innerHTML = x.html;
@@ -21,7 +27,7 @@ HTMLWidgets.widget({
         // Create Shuffle grid
         var element = document.getElementById(id);
         element.classList.add("shuffle-container");
-        var shuffleInstance = new Shuffle(element, x.options);
+        var shuffleInstance = new Shuffle(element, x.options.options);
 
         // No card
         var nocard = document.createElement('div');
@@ -67,13 +73,27 @@ HTMLWidgets.widget({
               var decreasing = button.getAttribute('data-sort-decreasing') === "true";
               if (sortBy == "random") {
                 shuffleInstance.sort({randomize: true});
+              } else if (sortBy == "random2") {
+                shuffleInstance.sort({
+                  reverse: decreasing,
+                  by: function(element) {
+                    if (element.hasAttribute("data-exclude-sort")) {
+                      return undefined;
+                    }
+                    return Math.random();
+                  }
+                });
               } else {
                 shuffleInstance.sort({
                   reverse: decreasing,
                   by: function(element) {
+                    if (element.hasAttribute("data-exclude-sort")) {
+                      return null;
+                    }
                     var sortVal = element.getAttribute('data-' + sortBy);
-                    if (numeric === "true") {
-                      sortVal = parseFloat(sortVal);
+                    var isnum = JSON.parse(element.getAttribute('data-sc-isnum'));
+                    if (isnum !== null) {
+                      sortVal = isnum.indexOf(sortBy) < 0 ? sortVal : parseFloat(sortVal);
                     }
                     return sortVal;
                   }
@@ -82,6 +102,23 @@ HTMLWidgets.widget({
             }, true);
           });
         }
+
+
+        // Remove buttons
+        var removebtn = document.querySelectorAll('.shufflecards-remove');
+        if (removebtn !== null) {
+          removebtn = Array.from(removebtn);
+          removebtn.forEach(function (button) {
+            button.addEventListener('click', function(e) {
+              var elremove = button.parentNode;
+              var shufid = elremove.getAttribute('data-shuffleId');
+              if (shufid === id) {
+                shuffleInstance.remove([elremove]);
+              }
+            }, true);
+          });
+        }
+
 
         // No data message
         shuffleInstance.on(Shuffle.EventType.LAYOUT, function (data) {

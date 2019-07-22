@@ -17,6 +17,8 @@ HTMLWidgets.widget({
 
         if (x.use_bs_grid) {
           el.classList.add("row");
+        } else {
+          el.style.margin = "auto";
         }
 
         // add html markup
