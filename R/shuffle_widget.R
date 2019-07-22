@@ -11,7 +11,7 @@
 #' @param options Options for Shuffle, see \code{\link{shuffle_options}}.
 #' @param no_card UI definition (or text) to display when all cards are filtered out.
 #' @param use_bs_grid Allow to use Bootstrap grid system, e.g. same
-#'  as in \code{\link[shiny]{fluidRow}}. If \code{TRUE}, you can use
+#'  as in \code{\link[shiny]{column}}. If \code{TRUE}, you can use
 #'  a width between 1 and 12 in \code{\link{shuffle_card}}.
 #' @param width A numeric input in pixels.
 #' @param height A numeric input in pixels.

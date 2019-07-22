@@ -1,7 +1,7 @@
 
 #' Run examples of use of 'shufflecards'
 #'
-#' @param example Name of the example, currently only option is \code{"gapminder"}.
+#' @param example Name of the example, between : \code{"gapminder"}, \code{"bs-grid"}, \code{"grid-plot"}.
 #'
 #' @export
 #'
@@ -13,7 +13,7 @@
 #' run_example("gapminder")
 #'
 #' }
-run_example <- function(example = c("gapminder")) {
+run_example <- function(example = c("gapminder", "bs-grid", "grid-plot", "filter-sort")) {
   example <- match.arg(example)
   path <- file.path("examples", paste0(example, "-app"))
   runApp(
