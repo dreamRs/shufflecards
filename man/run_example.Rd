@@ -4,8 +4,7 @@
 \alias{run_example}
 \title{Run examples of use of 'shufflecards'}
 \usage{
-run_example(example = c("gapminder", "bs-grid", "grid-plot",
-  "filter-sort"))
+run_example(example = c("gapminder", "bs-grid", "grid-plot", "filter-sort"))
 }
 \arguments{
 \item{example}{Name of the example, between : \code{"gapminder"}, \code{"bs-grid"}, \code{"grid-plot"}.}

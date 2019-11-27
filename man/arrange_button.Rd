@@ -4,8 +4,15 @@
 \alias{arrange_button}
 \title{Buttons for \strong{RMarkdown} document}
 \usage{
-arrange_button(label, by, desc = FALSE, status = "default",
-  icon = NULL, width = NULL, ...)
+arrange_button(
+  label,
+  by,
+  desc = FALSE,
+  status = "default",
+  icon = NULL,
+  width = NULL,
+  ...
+)
 }
 \arguments{
 \item{label}{The contents of the button.}

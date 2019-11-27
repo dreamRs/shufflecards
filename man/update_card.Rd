@@ -4,8 +4,13 @@
 \alias{update_card}
 \title{Update meta-data of a card}
 \usage{
-update_card(shuffleId, cardId, ..., title = NULL,
-  session = shiny::getDefaultReactiveDomain())
+update_card(
+  shuffleId,
+  cardId,
+  ...,
+  title = NULL,
+  session = shiny::getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{shuffleId}{The id of the shuffle container.}

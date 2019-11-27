@@ -4,8 +4,14 @@
 \alias{shuffle_options}
 \title{Options for Shuffle}
 \usage{
-shuffle_options(is_centered = NULL, column_width = NULL,
-  gutter_width = NULL, speed = NULL, easing = NULL, ...)
+shuffle_options(
+  is_centered = NULL,
+  column_width = NULL,
+  gutter_width = NULL,
+  speed = NULL,
+  easing = NULL,
+  ...
+)
 }
 \arguments{
 \item{is_centered}{Attempt to center grid items in each row.}

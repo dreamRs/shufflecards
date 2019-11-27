@@ -4,8 +4,11 @@
 \alias{filter_cards_groups}
 \title{Filter a Shuffle grid layout by groups}
 \usage{
-filter_cards_groups(shuffleId, groups,
-  session = shiny::getDefaultReactiveDomain())
+filter_cards_groups(
+  shuffleId,
+  groups,
+  session = shiny::getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{shuffleId}{The id of the shuffle container.}

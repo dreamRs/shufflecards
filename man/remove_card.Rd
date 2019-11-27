@@ -4,8 +4,7 @@
 \alias{remove_card}
 \title{Remove a card in a Shuffle grid}
 \usage{
-remove_card(shuffleId, cardId,
-  session = shiny::getDefaultReactiveDomain())
+remove_card(shuffleId, cardId, session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
 \item{shuffleId}{The id of the shuffle container.}

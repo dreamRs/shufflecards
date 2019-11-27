@@ -6,8 +6,12 @@
 \alias{randomize_cards}
 \title{Arrange cards in a Shuffle grid layout}
 \usage{
-arrange_cards(shuffleId, by, desc = FALSE,
-  session = shiny::getDefaultReactiveDomain())
+arrange_cards(
+  shuffleId,
+  by,
+  desc = FALSE,
+  session = shiny::getDefaultReactiveDomain()
+)
 
 randomize_cards(shuffleId, session = shiny::getDefaultReactiveDomain())
 }

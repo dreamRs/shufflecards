@@ -4,9 +4,15 @@
 \alias{shuffle_container}
 \title{Create a Shuffle container}
 \usage{
-shuffle_container(shuffleId, ..., card_list = NULL,
-  options = shuffle_options(), no_card = NULL, use_bs_grid = FALSE,
-  width = NULL)
+shuffle_container(
+  shuffleId,
+  ...,
+  card_list = NULL,
+  options = shuffle_options(),
+  no_card = NULL,
+  use_bs_grid = FALSE,
+  width = NULL
+)
 }
 \arguments{
 \item{shuffleId}{Shuffle's id.}

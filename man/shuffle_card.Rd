@@ -4,9 +4,18 @@
 \alias{shuffle_card}
 \title{Shuffle card element}
 \usage{
-shuffle_card(..., groups = NULL, id = NULL, title = NULL,
-  border = FALSE, closable = FALSE, class = NULL, style = NULL,
-  width = NULL, height = NULL)
+shuffle_card(
+  ...,
+  groups = NULL,
+  id = NULL,
+  title = NULL,
+  border = FALSE,
+  closable = FALSE,
+  class = NULL,
+  style = NULL,
+  width = NULL,
+  height = NULL
+)
 }
 \arguments{
 \item{...}{UI elements to include within the card. Named elements can be used to arrange cards.}

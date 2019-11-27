@@ -4,9 +4,17 @@
 \alias{shuffle_widget}
 \title{Htmlwidget for 'Shuffle.js'}
 \usage{
-shuffle_widget(..., card_list = NULL, shared_data = NULL,
-  options = shuffle_options(), no_card = NULL, use_bs_grid = FALSE,
-  width = NULL, height = NULL, shuffleId = NULL)
+shuffle_widget(
+  ...,
+  card_list = NULL,
+  shared_data = NULL,
+  options = shuffle_options(),
+  no_card = NULL,
+  use_bs_grid = FALSE,
+  width = NULL,
+  height = NULL,
+  shuffleId = NULL
+)
 }
 \arguments{
 \item{...}{List of \code{shuffle_card}s to include.}

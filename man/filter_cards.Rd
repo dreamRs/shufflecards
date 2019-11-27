@@ -4,8 +4,12 @@
 \alias{filter_cards}
 \title{Filter a Shuffle grid layout with custom values}
 \usage{
-filter_cards(shuffleId, by, filters,
-  session = shiny::getDefaultReactiveDomain())
+filter_cards(
+  shuffleId,
+  by,
+  filters,
+  session = shiny::getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{shuffleId}{The id of the shuffle container.}

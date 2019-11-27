@@ -4,8 +4,12 @@
 \alias{add_card}
 \title{Add a card in a Shuffle grid}
 \usage{
-add_card(shuffleId, card, where = c("after", "before"),
-  session = shiny::getDefaultReactiveDomain())
+add_card(
+  shuffleId,
+  card,
+  where = c("after", "before"),
+  session = shiny::getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{shuffleId}{The id of the shuffle container.}

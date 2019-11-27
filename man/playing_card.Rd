@@ -4,8 +4,10 @@
 \alias{playing_card}
 \title{Playing cards}
 \usage{
-playing_card(suit = c("hearts", "spades", "diamonds", "clubs"),
-  value = c("a", 2:10, "j", "q", "k"))
+playing_card(
+  suit = c("hearts", "spades", "diamonds", "clubs"),
+  value = c("a", 2:10, "j", "q", "k")
+)
 }
 \arguments{
 \item{suit}{The name of the suit (e.g. \code{"hearts"}).}
